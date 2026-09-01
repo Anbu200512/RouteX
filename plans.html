@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Plans — RouteX</title>
+  <meta name="description" content="Simple RouteX subscription plans: Basic, Standard and Premium. GPS tracking, boarding and drop alerts, priority support and more.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/footer.js" defer></script>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <div id="site-header"></div>
+
+  <main>
+    <section class="relative overflow-hidden bg-brand-950">
+      <div class="pointer-events-none absolute inset-0 bg-grid opacity-20"></div>
+      <div class="pointer-events-none absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-400/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-24 -left-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl"></div>
+      <div class="relative mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-20">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold text-amber-300 backdrop-blur" data-reveal>
+          <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+          Simple, transparent pricing
+        </span>
+        <h1 class="mx-auto mt-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl" data-reveal>
+          Plans that grow <span class="bg-gradient-to-r from-amber-300 via-amber-200 to-sky-300 bg-clip-text text-transparent">with your family</span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg" data-reveal>
+          Every plan includes live GPS tracking and our verified safety standard. Upgrade anytime — no lock-ins, cancel freely.
+        </p>
+
+        <div class="mt-9 inline-flex items-center gap-1 rounded-full border border-white/15 bg-white/5 p-1 backdrop-blur" data-reveal>
+          <button id="billing-monthly" type="button" class="rounded-full px-5 py-2 text-sm font-bold text-white transition">Monthly</button>
+          <button id="billing-yearly" type="button" class="rounded-full px-5 py-2 text-sm font-bold text-white transition">Yearly <span class="ml-1 rounded-full bg-emerald-400/20 px-2 py-0.5 text-[10px] font-extrabold text-emerald-300">2 months free</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-14 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div id="plans-grid" class="grid gap-6 lg:grid-cols-3"></div>
+
+        <div class="mx-auto mt-12 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-slate-800 dark:bg-slate-900" data-reveal>
+          <p class="font-display text-sm font-bold text-slate-900 dark:text-white">All plans include</p>
+          <div class="mt-4 grid gap-2 text-left text-sm text-slate-600 dark:text-slate-300 sm:grid-cols-2">
+            <p class="flex items-center gap-2"><i data-lucide="shield-check" class="h-4 w-4 shrink-0 text-emerald-500"></i>Verified drivers &amp; GPS-equipped buses</p>
+            <p class="flex items-center gap-2"><i data-lucide="life-buoy" class="h-4 w-4 shrink-0 text-emerald-500"></i>24x7 emergency support line</p>
+            <p class="flex items-center gap-2"><i data-lucide="id-card" class="h-4 w-4 shrink-0 text-emerald-500"></i>Parent dashboard &amp; profile</p>
+            <p class="flex items-center gap-2"><i data-lucide="receipt" class="h-4 w-4 shrink-0 text-emerald-500"></i>Digital receipts every month</p>
+            <p class="flex items-center gap-2"><i data-lucide="rotate-ccw" class="h-4 w-4 shrink-0 text-emerald-500"></i>Free plan changes</p>
+            <p class="flex items-center gap-2"><i data-lucide="x-circle" class="h-4 w-4 shrink-0 text-emerald-500"></i>No hidden fees</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+    (function () {
+      var PLAN_ICONS = { basic: 'bus', standard: 'bus-front', premium: 'crown' };
+      var selected = 'standard';
+      var billing = 'monthly';
+
+      function priceOf(plan) {
+        return billing === 'yearly' ? Math.round(plan.price * 10 / 12) : plan.price;
+      }
+
+      function billingLabel() {
+        return billing === 'yearly' ? '/month, billed yearly' : '/month';
+      }
+
+      function render() {
+        var grid = document.getElementById('plans-grid');
+        grid.innerHTML = RouteX.PLANS.map(function (p) {
+          var active = selected === p.id;
+          return (
+            '<article data-plan="' + p.id + '" class="relative flex flex-col rounded-3xl border-2 p-7 transition ' +
+            (active ? 'border-brand-600 bg-brand-50/60 shadow-2xl shadow-brand-600/15 dark:border-amber-400 dark:bg-slate-900' : 'border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900') + '">' +
+            (p.popular ? '<span class="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 px-4 py-1 text-[11px] font-extrabold uppercase tracking-wide text-slate-900 shadow-lg">Most Popular</span>' : '') +
+            '<div class="flex items-start justify-between">' +
+            '<span class="flex h-12 w-12 items-center justify-center rounded-2xl ' + (active ? 'bg-brand-600 text-white' : 'bg-brand-600/10 text-brand-600 dark:text-amber-400') + '"><i data-lucide="' + PLAN_ICONS[p.id] + '" class="h-6 w-6"></i></span>' +
+            '<span class="flex h-7 w-7 items-center justify-center rounded-full border-2 ' + (active ? 'border-brand-600 bg-brand-600 text-white dark:border-amber-400 dark:bg-amber-400 dark:text-slate-900' : 'border-slate-300 text-transparent') + '"><i data-lucide="check" class="h-4 w-4"></i></span>' +
+            '</div>' +
+            '<h2 class="mt-5 font-display text-xl font-extrabold text-slate-900 dark:text-white">' + p.name + '</h2>' +
+            '<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">' + p.tagline + '</p>' +
+            '<p class="mt-5 flex items-end gap-1"><span class="font-display text-4xl font-extrabold text-slate-900 dark:text-white">' + RouteX.fmtMoney(priceOf(p)) + '</span><span class="pb-1 text-sm font-medium text-slate-400">' + billingLabel() + '</span></p>' +
+            (billing === 'yearly' ? '<p class="mt-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">Billed ' + RouteX.fmtMoney(p.price * 10) + ' per year (save 2 months)</p>' : '') +
+            '<ul class="mt-6 flex-1 space-y-2.5 text-sm text-slate-600 dark:text-slate-300">' +
+            p.features.map(function (f) { return '<li class="flex items-start gap-2.5"><i data-lucide="check-circle-2" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-500"></i>' + f + '</li>'; }).join('') +
+            '</ul>' +
+            '<button data-subscribe="' + p.id + '" class="mt-7 w-full rounded-xl px-5 py-3.5 text-sm font-extrabold transition ' +
+            (p.popular ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 hover:bg-brand-700' : 'border-2 border-slate-300 text-slate-800 hover:border-brand-600 hover:text-brand-600 dark:border-slate-600 dark:text-white dark:hover:border-amber-400 dark:hover:text-amber-300') + '">Choose ' + p.name + '</button>' +
+            '</article>'
+          );
+        }).join('');
+
+        RouteX.refreshIcons(grid);
+        RouteX.initReveal();
+
+        grid.querySelectorAll('[data-plan]').forEach(function (card) {
+          card.addEventListener('click', function (e) {
+            if (e.target.closest('[data-subscribe]')) return;
+            selected = card.getAttribute('data-plan');
+            render();
+          });
+        });
+        grid.querySelectorAll('[data-subscribe]').forEach(function (btn) {
+          btn.addEventListener('click', function () { subscribe(btn.getAttribute('data-subscribe')); });
+        });
+      }
+
+      function subscribe(pid) {
+        selected = pid;
+        var plan = RouteX.planById(pid);
+        var user = RouteX.getUser();
+        if (user) {
+          RouteX.toast('You\'ll be redirected to your dashboard to confirm the ' + plan.name + ' plan.', 'info', plan.name + ' plan selected');
+          setTimeout(function () {
+            window.location.href = 'dashboard.html?plan=' + pid;
+          }, 900);
+        } else {
+          RouteX.toast('Create your parent account to get started with the ' + plan.name + ' plan.', 'info', 'Almost there');
+          setTimeout(function () {
+            window.location.href = 'signup.html?plan=' + pid;
+          }, 900);
+        }
+      }
+
+      function bindBilling() {
+        var m = document.getElementById('billing-monthly');
+        var y = document.getElementById('billing-yearly');
+        function styleBtn() {
+          var on = 'bg-amber-400 text-slate-900 shadow dark:bg-amber-400 dark:text-slate-900';
+          var off = 'text-slate-200 hover:text-white';
+          m.className = 'rounded-full px-5 py-2 text-sm font-bold transition ' + (billing === 'monthly' ? on : off);
+          y.className = 'rounded-full px-5 py-2 text-sm font-bold transition ' + (billing === 'yearly' ? on : off);
+        }
+        m.addEventListener('click', function () { billing = 'monthly'; styleBtn(); render(); });
+        y.addEventListener('click', function () { billing = 'yearly'; styleBtn(); render(); });
+        styleBtn();
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof RouteX === 'undefined') return;
+        var params = new URLSearchParams(location.search);
+        if (params.get('plan')) selected = params.get('plan');
+        bindBilling();
+        render();
+      });
+    })();
+  </script>
+</body>
+</html>

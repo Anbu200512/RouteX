@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — RouteX</title>
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <main class="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-20 dark:bg-slate-950">
+    <div class="pointer-events-none absolute inset-0 bg-grid opacity-40"></div>
+    <div class="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-brand-400/20 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-amber-400/20 blur-3xl"></div>
+
+    <div class="relative text-center" data-reveal>
+      <p class="font-display text-7xl font-extrabold tracking-tight text-transparent sm:text-8xl" style="-webkit-text-stroke:2px #9db2f7">404</p>
+      <span class="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="map-pin-off" class="h-8 w-8"></i></span>
+      <h1 class="mt-6 font-display text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">This stop doesn't exist</h1>
+      <p class="mx-auto mt-3 max-w-md text-slate-500 dark:text-slate-400">Looks like the page you're looking for has left the route. Let's get you back to a familiar stop.</p>
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="index.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-600/30 transition hover:bg-brand-700">
+          <i data-lucide="arrow-left" class="h-4 w-4"></i>Back to Home
+        </a>
+        <a href="routes.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 px-6 py-3 text-sm font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300">
+          <i data-lucide="map" class="h-4 w-4"></i>Browse Routes
+        </a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

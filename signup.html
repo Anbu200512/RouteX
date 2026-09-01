@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Signup — RouteX</title>
+  <meta name="description" content="Create a free RouteX parent account with your child's details — school, pickup location and preferred bus route — in under two minutes.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/auth.js" defer></script>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <div id="site-header"></div>
+
+  <main class="bg-gradient-to-b from-brand-50/60 to-white dark:from-slate-950 dark:to-slate-950">
+    <div class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:py-16" data-reveal>
+      <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 dark:border-slate-800 dark:bg-slate-900 lg:grid lg:grid-cols-5">
+        <!-- image side -->
+        <div class="relative hidden min-h-[36rem] lg:col-span-2 lg:block">
+          <img src="assets/images/12.jpg" alt="RouteX school bus" class="absolute inset-0 h-full w-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-brand-950 via-brand-900/70 to-brand-700/40"></div>
+          <div class="absolute inset-x-0 bottom-0 p-8">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur">
+              <i data-lucide="shield-check" class="h-4 w-4"></i>Parent Portal
+            </span>
+            <h2 class="mt-4 font-display text-2xl font-extrabold leading-tight text-white">Safely move your child.<br>Every single day.</h2>
+            <p class="mt-2 text-sm text-brand-100">Live tracking, verified drivers and instant alerts for complete peace of mind.</p>
+          </div>
+        </div>
+
+        <!-- form side -->
+        <div class="p-6 sm:p-9 lg:col-span-3">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50/60 px-3.5 py-1 text-xs font-semibold text-brand-700 dark:border-slate-700 dark:bg-slate-800 dark:text-amber-400">
+            <i data-lucide="user-plus" class="h-4 w-4"></i>Create your account
+          </span>
+          <h1 class="mt-3 font-display text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl">Create your parent account</h1>
+          <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Add your details and your child's transport preferences. It takes less than two minutes.</p>
+
+          <form id="signup-form" class="mt-7 space-y-5" novalidate>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="su-name" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Full name</label>
+                <input id="su-name" type="text" class="rx-input" placeholder="e.g. Priya Deshmukh" autocomplete="name">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-name"></p>
+              </div>
+              <div>
+                <label for="su-phone" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Phone</label>
+                <input id="su-phone" type="tel" class="rx-input" placeholder="10-digit mobile number" autocomplete="tel">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-phone"></p>
+              </div>
+              <div class="sm:col-span-2">
+                <label for="su-email" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Email</label>
+                <input id="su-email" type="email" class="rx-input" placeholder="you@example.com" autocomplete="email">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-email"></p>
+              </div>
+              <div>
+                <label for="su-password" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Password</label>
+                <div class="relative">
+                  <input id="su-password" type="password" class="rx-input pr-11" placeholder="At least 6 characters">
+                  <button type="button" data-pass-toggle="su-password" class="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 hover:text-brand-600 dark:hover:text-amber-400" aria-label="Show or hide password">
+                    <i data-lucide="eye" class="h-5 w-5 eye-open"></i><i data-lucide="eye-off" class="hidden h-5 w-5 eye-closed"></i>
+                  </button>
+                </div>
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-password"></p>
+              </div>
+              <div>
+                <label for="su-confirm" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Confirm password</label>
+                <input id="su-confirm" type="password" class="rx-input" placeholder="Repeat your password">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-confirm"></p>
+              </div>
+              <div>
+                <label for="su-child" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Child name</label>
+                <input id="su-child" type="text" class="rx-input" placeholder="e.g. Aarav Deshmukh">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-child"></p>
+              </div>
+              <div>
+                <label for="su-school" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">School name</label>
+                <input id="su-school" type="text" class="rx-input" placeholder="e.g. Emerald Academy">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-school"></p>
+              </div>
+              <div>
+                <label for="su-pickup" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Pickup location</label>
+                <input id="su-pickup" type="text" class="rx-input" placeholder="e.g. House 42, Maple Street">
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-pickup"></p>
+              </div>
+              <div>
+                <label for="su-route" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Preferred route</label>
+                <select id="su-route" class="rx-input"></select>
+                <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="su-route"></p>
+              </div>
+            </div>
+
+            <div id="signup-error" class="hidden rounded-xl bg-rose-50 px-4 py-3 text-sm font-medium text-rose-600 dark:bg-rose-500/10 dark:text-rose-300"></div>
+
+            <button type="submit" id="signup-submit" class="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-brand-600/30 transition hover:bg-brand-700 disabled:opacity-60">
+              <i data-lucide="user-plus" class="h-4 w-4"></i>Create account
+            </button>
+
+            <p class="text-center text-sm text-slate-500 dark:text-slate-400">Already have an account?
+              <a href="login.html" class="font-bold text-brand-600 hover:underline dark:text-amber-400">Log in</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      function setErr(id, msg) {
+        var f = document.getElementById(id);
+        var p = document.querySelector('[data-err="' + id + '"]');
+        if (msg) { f.classList.add('field-error'); if (p) { p.textContent = msg; p.classList.remove('hidden'); } }
+        else { f.classList.remove('field-error'); if (p) { p.textContent = ''; p.classList.add('hidden'); } }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (typeof RouteX === 'undefined' || typeof RouteX.auth === 'undefined') return;
+
+        var params = new URLSearchParams(location.search);
+        var routeSelect = document.getElementById('su-route');
+        RouteX.ROUTES.forEach(function (r, i) {
+          var o = document.createElement('option');
+          o.value = r.id;
+          o.textContent = r.name + ' (Bus ' + r.busNo + ')';
+          if (i === 0) o.selected = true;
+          routeSelect.appendChild(o);
+        });
+        var preset = params.get('route');
+        if (preset && RouteX.routeById(preset)) routeSelect.value = preset;
+
+        if (params.get('plan')) {
+          var plan = RouteX.planById(params.get('plan'));
+          RouteX.toast('You can select the ' + plan.name + ' plan from your dashboard after login.', 'info', plan.name + ' plan picked');
+        }
+
+        document.querySelectorAll('[data-pass-toggle]').forEach(function (btn) {
+          var id = btn.getAttribute('data-pass-toggle');
+          btn.addEventListener('click', function () {
+            var inp = document.getElementById(id);
+            var show = inp.type === 'password';
+            inp.type = show ? 'text' : 'password';
+            btn.querySelector('.eye-open').classList.toggle('hidden', show);
+            btn.querySelector('.eye-closed').classList.toggle('hidden', !show);
+          });
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          var name = document.getElementById('su-name').value.trim();
+          var phone = document.getElementById('su-phone').value.trim();
+          var email = document.getElementById('su-email').value.trim();
+          var password = document.getElementById('su-password').value;
+          var confirm = document.getElementById('su-confirm').value;
+          var childName = document.getElementById('su-child').value.trim();
+          var school = document.getElementById('su-school').value.trim();
+          var pickup = document.getElementById('su-pickup').value.trim();
+          var route = routeSelect.value;
+
+          var ok = true;
+          if (name.length < 2) { setErr('su-name', 'Enter your full name.'); ok = false; } else setErr('su-name', '');
+          if (!RouteX.auth.phoneValid(phone)) { setErr('su-phone', 'Enter a valid 10-digit Indian mobile number.'); ok = false; } else setErr('su-phone', '');
+          if (RouteX.auth.findUser(email)) { setErr('su-email', 'An account already exists with this email.'); ok = false; }
+          else if (!RouteX.auth.emailValid(email)) { setErr('su-email', 'Enter a valid email address.'); ok = false; } else setErr('su-email', '');
+          if (password.length < 6) { setErr('su-password', 'Password must be at least 6 characters.'); ok = false; } else setErr('su-password', '');
+          if (confirm !== password) { setErr('su-confirm', 'Passwords do not match.'); ok = false; } else setErr('su-confirm', '');
+          if (childName.length < 2) { setErr('su-child', 'Enter your child\'s name.'); ok = false; } else setErr('su-child', '');
+          if (school.length < 2) { setErr('su-school', 'Enter the school name.'); ok = false; } else setErr('su-school', '');
+          if (pickup.length < 3) { setErr('su-pickup', 'Enter a pickup location.'); ok = false; } else setErr('su-pickup', '');
+          if (!route) { setErr('su-route', 'Choose a preferred route.'); ok = false; } else setErr('su-route', '');
+          if (!ok) { RouteX.toast('Please fix the highlighted fields.', 'error', 'Can\'t create account yet'); return; }
+
+          var record = {
+            parentName: name,
+            phone: phone,
+            email: email,
+            password: password,
+            address: '',
+            child: {
+              name: childName,
+              school: school,
+              pickupLocation: pickup,
+              routeId: route
+            }
+          };
+
+          var btn = document.getElementById('signup-submit');
+          btn.disabled = true;
+          setTimeout(function () {
+            var res = RouteX.auth.registerUser(record);
+            if (!res.ok) {
+              btn.disabled = false;
+              document.getElementById('signup-error').textContent = res.reason;
+              document.getElementById('signup-error').classList.remove('hidden');
+              return;
+            }
+            RouteX.toast('Your parent account is ready. Log in to open your dashboard.', 'success', 'Account created');
+            var url = 'login.html?signup=ok';
+            if (params.get('plan')) url += '&plan=' + encodeURIComponent(params.get('plan'));
+            setTimeout(function () { window.location.href = url; }, 1000);
+          }, 600);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

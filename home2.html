@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home 2 — RouteX School Transport | Safe Rides. Smarter Tracking.</title>
+  <meta name="description" content="RouteX home: smart, GPS-enabled school transport with verified drivers, live tracking, boarding confirmations and parent alerts.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/footer.js" defer></script>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="relative overflow-hidden bg-brand-950">
+      <div class="pointer-events-none absolute inset-0 bg-grid opacity-20"></div>
+      <div class="pointer-events-none absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-400/20 blur-3xl"></div>
+      <div class="relative mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8 lg:py-32">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold text-amber-300 backdrop-blur">
+          <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+          Smart transport for 38+ schools
+        </span>
+        <h1 class="mx-auto mt-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl">
+          Peace of mind,<br>
+          <span class="bg-gradient-to-r from-amber-300 via-amber-200 to-sky-300 bg-clip-text text-transparent">one school ride at a time</span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-xl text-base leading-relaxed text-slate-300 sm:text-lg">
+          RouteX pairs every school bus with live GPS, verified drivers and instant confirmations — so you always know where your child is.
+        </p>
+        <div class="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href="signup.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-8 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="user-plus" class="h-5 w-5"></i>Create Free Account</a>
+          <a href="routes.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/25 px-8 py-3.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"><i data-lucide="map" class="h-5 w-5"></i>Explore Routes</a>
+        </div>
+        <div class="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-4">
+          <div>
+            <p class="font-display text-3xl font-extrabold text-amber-300">8,500+</p>
+            <p class="mt-1 text-xs font-medium text-slate-400">Students daily</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-extrabold text-amber-300">120+</p>
+            <p class="mt-1 text-xs font-medium text-slate-400">GPS buses</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-extrabold text-amber-300">14</p>
+            <p class="mt-1 text-xs font-medium text-slate-400">Covered routes</p>
+          </div>
+          <div>
+            <p class="font-display text-3xl font-extrabold text-amber-300">99.8%</p>
+            <p class="mt-1 text-xs font-medium text-slate-400">On-time record</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STRIP ============ -->
+    <section class="border-b border-slate-200 bg-white py-10 dark:border-slate-800 dark:bg-slate-900/40">
+      <div class="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 sm:px-6 lg:grid-cols-4 lg:px-8" data-reveal>
+        <div class="flex items-center gap-3">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="clock" class="h-5 w-5"></i></span>
+          <div><p class="text-sm font-bold text-slate-900 dark:text-white">Live ETA</p><p class="text-xs text-slate-500 dark:text-slate-400">Updates in real time</p></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600"><i data-lucide="shield-check" class="h-5 w-5"></i></span>
+          <div><p class="text-sm font-bold text-slate-900 dark:text-white">Verified drivers</p><p class="text-xs text-slate-500 dark:text-slate-400">Background-checked</p></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-600"><i data-lucide="bell-ring" class="h-5 w-5"></i></span>
+          <div><p class="text-sm font-bold text-slate-900 dark:text-white">Instant alerts</p><p class="text-xs text-slate-500 dark:text-slate-400">Board, drop &amp; delays</p></div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-sky-500/10 text-sky-600"><i data-lucide="route" class="h-5 w-5"></i></span>
+          <div><p class="text-sm font-bold text-slate-900 dark:text-white">Optimised routes</p><p class="text-xs text-slate-500 dark:text-slate-400">Tuned per area</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-reveal>
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600 dark:text-amber-400">Simple by design</span>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Three steps to a calmer morning</h2>
+        </div>
+        <div class="mt-14 grid gap-6 md:grid-cols-3">
+          <div class="rounded-2xl border-2 border-dashed border-brand-200 bg-brand-50/40 p-8 text-center dark:border-slate-700 dark:bg-slate-900" data-reveal>
+            <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600 text-white shadow-lg shadow-brand-600/30"><i data-lucide="user-plus" class="h-7 w-7"></i></span>
+            <p class="mt-5 font-display text-lg font-bold text-slate-900 dark:text-white">1. Make an account</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Add your child's school, pickup stop and preferred route in under two minutes.</p>
+          </div>
+          <div class="rounded-2xl border-2 border-dashed border-brand-200 bg-brand-50/40 p-8 text-center dark:border-slate-700 dark:bg-slate-900" data-reveal>
+            <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600 text-white shadow-lg shadow-brand-600/30"><i data-lucide="navigation" class="h-7 w-7"></i></span>
+            <p class="mt-5 font-display text-lg font-bold text-slate-900 dark:text-white">2. Track live</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Watch the bus approach on the map and see exactly when it reaches your stop.</p>
+          </div>
+          <div class="rounded-2xl border-2 border-dashed border-brand-200 bg-brand-50/40 p-8 text-center dark:border-slate-700 dark:bg-slate-900" data-reveal>
+            <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-600 text-white shadow-lg shadow-brand-600/30"><i data-lucide="check-check" class="h-7 w-7"></i></span>
+            <p class="mt-5 font-display text-lg font-bold text-slate-900 dark:text-white">3. Get confirmed</p>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Board and drop confirmations land on your phone the moment they happen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IMAGE SHOWCASE: TRACKING IN ACTION ============ -->
+    <section class="relative overflow-hidden py-20 dark:bg-slate-950">
+      <div class="pointer-events-none absolute -right-32 top-1/3 h-80 w-80 rounded-full bg-brand-500/10 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-32 bottom-0 h-80 w-80 rounded-full bg-amber-400/10 blur-3xl"></div>
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div data-reveal>
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600 dark:text-amber-400">Watch it happen</span>
+            <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Every ride, mapped and timed</h2>
+            <p class="mt-4 text-slate-600 dark:text-slate-300">See the exact position of the bus, its next stop and the estimated arrival — all updating live as time passes.</p>
+            <ul class="mt-7 space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="navigation" class="h-4 w-4"></i></span>
+                <div><p class="text-sm font-bold text-slate-900 dark:text-white">Live position</p><p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">The bus marker moves on the map the whole way to your stop.</p></div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600"><i data-lucide="timer" class="h-4 w-4"></i></span>
+                <div><p class="text-sm font-bold text-slate-900 dark:text-white">Estimated arrival</p><p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">A rolling ETA that adjusts with traffic and road conditions.</p></div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-600"><i data-lucide="route" class="h-4 w-4"></i></span>
+                <div><p class="text-sm font-bold text-slate-900 dark:text-white">Route view</p><p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">Every stop between depot and school shown on a single line.</p></div>
+              </li>
+            </ul>
+            <a href="dashboard.html" class="mt-8 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-brand-600/25 transition hover:-translate-y-0.5 hover:bg-brand-700"><i data-lucide="play-circle" class="h-5 w-5"></i>Try the live dashboard</a>
+          </div>
+          <div class="relative order-2 mx-auto w-full max-w-xl lg:order-1" data-reveal>
+            <div class="relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/60 shadow-2xl shadow-brand-900/10 backdrop-blur dark:border-slate-800 dark:bg-slate-900/40">
+              <img src="assets/images/3.jpg" alt="RouteX bus positioned on the live route map" class="h-64 w-full object-cover sm:h-72" width="640" height="440">
+              <div class="flex items-center justify-between gap-3 border-t border-slate-200/70 px-5 py-3.5 dark:border-slate-800">
+                <div class="flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-300">
+                  <span class="relative flex h-2.5 w-2.5"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span></span>
+                  Sunrise Circuit • Bus SB-142
+                </div>
+                <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">Arriving • 3 min</span>
+              </div>
+            </div>
+            <div class="animate-float absolute -left-2 -top-6 rounded-2xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur [animation-delay:1.1s] dark:border-slate-700 dark:bg-slate-800/95 sm:-left-6">
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600/15 text-brand-600 dark:text-amber-400"><i data-lucide="map-pin" class="h-5 w-5"></i></span>
+                <div><p class="text-xs font-bold text-slate-900 dark:text-white">Lakeview</p><p class="text-[11px] text-slate-500 dark:text-slate-400">Next stop</p></div>
+              </div>
+            </div>
+            <div class="animate-float absolute -right-2 bottom-6 rounded-2xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-800/95 sm:-right-6">
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-600"><i data-lucide="clock" class="h-5 w-5"></i></span>
+                <div><p class="text-xs font-bold text-slate-900 dark:text-white">On time</p><p class="text-[11px] text-slate-500 dark:text-slate-400">ETA 7:46 AM</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FEATURE SPLIT ============ -->
+    <section class="bg-slate-50 py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div data-reveal>
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600 dark:text-amber-400">Built for families</span>
+            <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">More than a bus tracker</h2>
+            <p class="mt-4 text-slate-600 dark:text-slate-300">RouteX connects parents, schools and drivers in one accountable chain — so everyone knows the journey is going as planned.</p>
+            <ul class="mt-7 space-y-4">
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="map-pin" class="h-4 w-4"></i></span>
+                <div><p class="text-sm font-bold text-slate-900 dark:text-white">Safe designated stops</p><p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">Supervised pickup points with an orderly boarding handover every morning.</p></div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600"><i data-lucide="gauge" class="h-4 w-4"></i></span>
+                <div><p class="text-sm font-bold text-slate-900 dark:text-white">Guarded with speed limits</p><p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">Geo-fenced zones keep buses within safer speeds near schools and homes.</p></div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-600"><i data-lucide="headset" class="h-4 w-4"></i></span>
+                <div><p class="text-sm font-bold text-slate-900 dark:text-white">Support when you need it</p><p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">A 24x7 command centre watches every route and answers every alert.</p></div>
+              </li>
+            </ul>
+            <a href="safety.html" class="mt-8 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-brand-600/25 transition hover:-translate-y-0.5 hover:bg-brand-700"><i data-lucide="shield-check" class="h-5 w-5"></i>See our safety stack</a>
+          </div>
+          <div class="grid gap-5" data-reveal>
+            <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="satellite" class="h-6 w-6"></i></span>
+              <div><p class="font-display font-bold text-slate-900 dark:text-white">Live GPS tracking</p><p class="text-sm text-slate-500 dark:text-slate-400">Position broadcast every 10 seconds, viewable from anywhere.</p></div>
+            </div>
+            <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600"><i data-lucide="badge-check" class="h-6 w-6"></i></span>
+              <div><p class="font-display font-bold text-slate-900 dark:text-white">Verified drivers</p><p class="text-sm text-slate-500 dark:text-slate-400">Three-tier checks and annual refresher training for every driver.</p></div>
+            </div>
+            <div class="flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-400/20 text-amber-600"><i data-lucide="bell-ring" class="h-6 w-6"></i></span>
+              <div><p class="font-display font-bold text-slate-900 dark:text-white">Parent alerts</p><p class="text-sm text-slate-500 dark:text-slate-400">Boarding, drop and delay notifications, straight to your phone.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IMAGE BANNER: DRIVER ============ -->
+    <section class="py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" data-reveal>
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 via-brand-800 to-brand-950 shadow-2xl shadow-brand-900/30">
+          <div class="pointer-events-none absolute inset-0 bg-grid opacity-25"></div>
+          <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-amber-400/25 blur-3xl"></div>
+          <div class="relative grid items-center gap-10 p-8 sm:p-12 lg:grid-cols-2">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">The people behind the wheel</span>
+              <h2 class="mt-3 font-display text-2xl font-extrabold text-white sm:text-3xl">Drivers your children can trust</h2>
+              <p class="mt-4 max-w-lg text-slate-200">Before any RouteX driver takes a seat, they clear three tiers of checks, annual training and a job-shadowed road test. Families rate them on every single ride.</p>
+              <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+                <li class="flex items-center gap-2 text-sm text-slate-100"><i data-lucide="badge-check" class="h-4 w-4 shrink-0 text-amber-300"></i>Background &amp; health checks</li>
+                <li class="flex items-center gap-2 text-sm text-slate-100"><i data-lucide="graduation-cap" class="h-4 w-4 shrink-0 text-amber-300"></i>Annual refresher training</li>
+                <li class="flex items-center gap-2 text-sm text-slate-100"><i data-lucide="star" class="h-4 w-4 shrink-0 text-amber-300"></i>Rated by families per ride</li>
+                <li class="flex items-center gap-2 text-sm text-slate-100"><i data-lucide="shield-check" class="h-4 w-4 shrink-0 text-amber-300"></i>GPS &amp; speed monitored live</li>
+              </ul>
+              <a href="safety.html" class="mt-8 inline-flex items-center gap-2 rounded-xl bg-amber-400 px-6 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="shield-check" class="h-5 w-5"></i>Meet the safety standard</a>
+            </div>
+            <div class="relative mx-auto w-full max-w-md">
+              <div class="overflow-hidden rounded-2xl border border-white/15 shadow-xl">
+                <img src="assets/images/5.jpg" alt="RouteX driver at the wheel of the school bus" class="h-72 w-full object-cover" width="640" height="440">
+                <div class="flex items-center justify-center gap-2 border-t border-white/15 bg-white/10 px-4 py-3 text-xs font-semibold text-white backdrop-blur">
+                  <i data-lucide="star" class="h-4 w-4 fill-current text-amber-300"></i> 4.9 rated • Verified since 2022
+                </div>
+              </div>
+              <div class="animate-float absolute -bottom-5 -left-4 rounded-2xl border border-slate-200 bg-white/95 p-3.5 shadow-xl backdrop-blur dark:border-slate-700 dark:bg-slate-800/95">
+                <div class="flex items-center gap-3">
+                  <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-600"><i data-lucide="shield-check" class="h-5 w-5"></i></span>
+                  <div><p class="text-xs font-bold text-slate-900 dark:text-white">Raj Sharma</p><p class="text-[11px] text-slate-500 dark:text-slate-400">SB-104 • 5-year veteran</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ROUTE HIGHLIGHTS ============ -->
+    <section class="py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end" data-reveal>
+          <div class="max-w-xl">
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600 dark:text-amber-400">Covering your area</span>
+            <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Pick the route that fits</h2>
+          </div>
+          <a href="routes.html" class="inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300">View all routes <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+        </div>
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <a href="routes.html" class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="route" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Greenwood Route</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Bus SB-104 • Maple Street pickup • 7:45 AM</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand-600 transition group-hover:gap-2 dark:text-amber-400">View details <i data-lucide="arrow-right" class="h-4 w-4"></i></span>
+          </a>
+          <a href="routes.html" class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600"><i data-lucide="route" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Sunrise Circuit</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Bus SB-142 • Lakeview pickup • 8:10 AM</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand-600 transition group-hover:gap-2 dark:text-amber-400">View details <i data-lucide="arrow-right" class="h-4 w-4"></i></span>
+          </a>
+          <a href="routes.html" class="group relative overflow-hidden rounded-2xl border-2 border-dashed border-brand-300 bg-brand-50/50 p-7 dark:border-slate-700 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="map" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">11 more routes near you</h3>
+            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Maple Valley, Hillcrest Line, Riverdale Express &amp; more.</p>
+            <span class="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand-600 transition group-hover:gap-2 dark:text-amber-400">See all routes <i data-lucide="arrow-right" class="h-4 w-4"></i></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIAL ============ -->
+    <section class="bg-slate-50 py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-reveal>
+          <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-600 dark:text-amber-400">In their words</span>
+          <h2 class="mt-3 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Trusted by parents every morning</h2>
+        </div>
+        <figure class="mt-12 rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+          <div class="mx-auto flex w-fit gap-1 text-amber-400">
+            <i data-lucide="star" class="h-5 w-5 fill-current"></i><i data-lucide="star" class="h-5 w-5 fill-current"></i><i data-lucide="star" class="h-5 w-5 fill-current"></i><i data-lucide="star" class="h-5 w-5 fill-current"></i><i data-lucide="star" class="h-5 w-5 fill-current"></i>
+          </div>
+          <blockquote class="mx-auto mt-5 max-w-2xl font-display text-xl font-bold leading-relaxed text-slate-800 dark:text-white">"The live map has completely removed the morning scramble. We leave when the bus does — never before, never after."</blockquote>
+          <figcaption class="mt-6 flex items-center justify-center gap-3">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-brand-600/15 text-sm font-extrabold text-brand-700 dark:text-amber-400">NK</span>
+            <div class="text-left"><p class="text-sm font-bold text-slate-900 dark:text-white">Nikhil &amp; Kavita Rao</p><p class="text-xs text-slate-500 dark:text-slate-400">Parents, two kids on the Sunrise Circuit</p></div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 to-brand-950 px-6 py-14 text-center shadow-2xl shadow-brand-900/30 sm:px-12 lg:py-16" data-reveal>
+          <div class="pointer-events-none absolute inset-0 bg-grid opacity-30"></div>
+          <div class="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-amber-400/20 blur-3xl"></div>
+          <div class="relative mx-auto max-w-2xl">
+            <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-400/20 text-amber-300"><i data-lucide="bus-front" class="h-7 w-7"></i></span>
+            <h2 class="mt-6 font-display text-2xl font-extrabold text-white sm:text-3xl">Start tracking your child today</h2>
+            <p class="mx-auto mt-3 max-w-xl text-slate-200">Create a free parent account and get live visibility on your bus by tomorrow morning.</p>
+            <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="signup.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-7 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="user-plus" class="h-5 w-5"></i>Sign Up Free</a>
+              <a href="contact.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-7 py-3.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"><i data-lucide="phone" class="h-5 w-5"></i>Talk to Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

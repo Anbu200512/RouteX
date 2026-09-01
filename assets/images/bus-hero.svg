@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1f2f7e"/>
+      <stop offset="1" stop-color="#334edf"/>
+    </linearGradient>
+    <linearGradient id="busBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fde047"/>
+      <stop offset="1" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#93c5fd"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- sky backdrop -->
+  <rect width="640" height="440" rx="28" fill="url(#sky)"/>
+
+  <!-- subtle grid on sky -->
+  <g stroke="rgba(255,255,255,0.08)" stroke-width="1">
+    <path d="M0 88H640M0 176H640M0 264H640"/>
+    <path d="M128 0V300M256 0V300M384 0V300M512 0V300"/>
+  </g>
+
+  <!-- floating pin -->
+  <g transform="translate(96,64)">
+    <circle cx="0" cy="0" r="26" fill="#fff" opacity="0.12"/>
+    <g transform="translate(0,4)">
+      <path d="M0-16c-7 0-12 5.4-12 12 0 8.4 12 20 12 20s12-11.6 12-20c0-6.6-5-12-12-12z" fill="#fef08a"/>
+      <circle cx="0" cy="-3" r="4.2" fill="#1f2f7e"/>
+    </g>
+    <circle cx="52" cy="-10" r="9" fill="none" stroke="#fef08a" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- road -->
+  <rect x="0" y="306" width="640" height="134" rx="28" fill="#0f172a"/>
+  <rect x="42" y="300" width="556" height="3" rx="1.5" fill="#64748b" opacity="0.9"/>
+
+  <!-- dashed center line -->
+  <g stroke="#fbbf24" stroke-width="5" stroke-linecap="round" stroke-dasharray="26 22">
+    <path d="M60 382H580"/>
+  </g>
+  <g fill="#475569">
+    <circle cx="60" cy="382" r="8"/>
+    <circle cx="580" cy="382" r="8"/>
+  </g>
+
+  <!-- ground shadow -->
+  <ellipse cx="320" cy="416" rx="250" ry="14" fill="#020617" opacity="0.55"/>
+
+  <!-- bus -->
+  <g>
+    <!-- wheels -->
+    <g>
+      <circle cx="205" cy="340" r="42" fill="#0b1220"/>
+      <circle cx="205" cy="340" r="23" fill="#e2e8f0"/>
+      <circle cx="205" cy="340" r="11" fill="#f59e0b"/>
+      <circle cx="455" cy="340" r="42" fill="#0b1220"/>
+      <circle cx="455" cy="340" r="23" fill="#e2e8f0"/>
+      <circle cx="455" cy="340" r="11" fill="#f59e0b"/>
+    </g>
+
+    <!-- body -->
+    <rect x="110" y="120" width="420" height="218" rx="34" fill="url(#busBody)" stroke="#b45309" stroke-width="4"/>
+
+    <!-- roof stripe -->
+    <path d="M118 146h404" stroke="#1f2f7e" stroke-width="20" stroke-linecap="round"/>
+
+    <!-- windshield -->
+    <path d="M400 176c0-30 22-44 48-38l36 7c14 3 16 14 16 26v62H400z" fill="url(#glass)" stroke="#1d4ed8" stroke-width="3"/>
+    <path d="M440 166l6 82h-14l-20-74z" fill="#fde047" opacity="0.35"/>
+
+    <!-- door -->
+    <path d="M176 196h72c8 0 12 6 12 16v126h-96z" fill="#f59e0b" stroke="#b45309" stroke-width="3"/>
+    <path d="M206 200v140M182 214h30" stroke="#92400e" stroke-width="3" opacity="0.6"/>
+
+    <!-- windows -->
+    <g>
+      <g fill="url(#glass)" stroke="#1f2f7e" stroke-width="4">
+        <rect x="268" y="184" width="52" height="46" rx="9"/>
+        <rect x="332" y="184" width="52" height="46" rx="9"/>
+      </g>
+    </g>
+
+    <!-- front -->
+    <rect x="500" y="252" width="30" height="60" rx="8" fill="#fef3c7" stroke="#b45309" stroke-width="3"/>
+    <circle cx="508" cy="276" r="6" fill="#fde047"/>
+    <circle cx="522" cy="276" r="6" fill="#fde047"/>
+    <rect x="140" y="262" width="60" height="9" rx="4.5" fill="#b45309" opacity="0.8"/>
+
+    <!-- brand on body -->
+    <text x="270" y="332" font-family="'Plus Jakarta Sans','Inter',sans-serif" font-size="34" font-weight="800" letter-spacing="4" fill="#1f2f7e">ROUTEX</text>
+    <text x="270" y="352" font-family="'Plus Jakarta Sans','Inter',sans-serif" font-size="13" font-weight="700" letter-spacing="7" fill="#92400e">SCHOOL BUS</text>
+  </g>
+
+  <!-- motion speed lines -->
+  <g stroke="#f8fafc" stroke-width="5" stroke-linecap="round" opacity="0.5">
+    <path d="M-10 250l60 0M-20 280l80 0"/>
+  </g>
+
+  <!-- route dots trail -->
+  <g fill="#fef08a">
+    <circle cx="70" cy="140" r="6" opacity="0.9"/>
+    <circle cx="92" cy="160" r="4" opacity="0.55"/>
+    <circle cx="112" cy="180" r="3" opacity="0.3"/>
+  </g>
+</svg>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Parent Dashboard — RouteX</title>
+  <meta name="description" content="RouteX parent dashboard: live bus tracking, boarding logs, subscription management, payments and notifications.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+
+  <div class="flex">
+    <!-- sidebar -->
+    <aside id="dash-sidebar" class="fixed inset-y-0 left-0 z-[70] flex w-72 max-w-[85vw] -translate-x-full flex-col border-r border-slate-200 bg-white transition-transform duration-300 dark:border-slate-800 dark:bg-slate-950 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+      <!-- sidebar head -->
+      <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+        <a href="index.html" class="flex items-center gap-2.5" aria-label="RouteX home">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-900 text-amber-300 shadow-lg shadow-brand-600/30"><i data-lucide="bus-front" class="h-5 w-5"></i></span>
+          <span class="leading-tight">
+            <span class="block font-display text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">Route<span class="text-brand-600 dark:text-amber-400">X</span></span>
+            <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">Parent Dashboard</span>
+          </span>
+        </a>
+        <button id="side-close" type="button" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 lg:hidden" aria-label="Close sidebar"><i data-lucide="x" class="h-5 w-5"></i></button>
+      </div>
+
+      <!-- nav -->
+      <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4" aria-label="Dashboard">
+        <button class="side-link" data-section="overview"><i data-lucide="layout-dashboard" class="h-5 w-5"></i>Overview</button>
+        <button class="side-link" data-section="tracking"><i data-lucide="navigation" class="h-5 w-5"></i>Live Bus Tracking</button>
+        <button class="side-link" data-section="route"><i data-lucide="route" class="h-5 w-5"></i>Route Details</button>
+        <button class="side-link" data-section="logs"><i data-lucide="calendar-check" class="h-5 w-5"></i>Boarding &amp; Alighting Logs</button>
+        <button class="side-link" data-section="sub"><i data-lucide="credit-card" class="h-5 w-5"></i>Subscription</button>
+        <button class="side-link" data-section="pay"><i data-lucide="wallet" class="h-5 w-5"></i>Payments</button>
+        <button class="side-link" data-section="history"><i data-lucide="receipt" class="h-5 w-5"></i>Payment History</button>
+        <button class="side-link" data-section="notif"><i data-lucide="bell" class="h-5 w-5"></i>Notifications<span id="notif-badge" class="ml-auto hidden rounded-full bg-brand-600 px-2 py-0.5 text-[10px] font-extrabold text-white"></span></button>
+        <button class="side-link" data-section="profile"><i data-lucide="user-round" class="h-5 w-5"></i>Profile</button>
+      </nav>
+
+      <!-- sidebar foot -->
+      <div class="border-t border-slate-200 p-3 dark:border-slate-800">
+        <div class="mb-2 grid grid-cols-2 gap-2">
+          <button id="side-theme-toggle" type="button" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400" aria-label="Toggle dark mode" title="Toggle dark/light">
+            <i data-lucide="sun" class="dash-theme-sun h-4 w-4 hidden"></i>
+            <i data-lucide="moon" class="dash-theme-moon h-4 w-4"></i><span>Theme</span>
+          </button>
+          <button id="side-dir-toggle" type="button" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400" aria-label="Toggle text direction" title="Toggle RTL/LTR">
+            <i data-lucide="arrow-right-left" class="dash-dir-rtl h-4 w-4 hidden"></i>
+            <i data-lucide="arrow-left-right" class="dash-dir-ltr h-4 w-4"></i><span>RTL/LTR</span>
+          </button>
+        </div>
+        <a href="index.html" class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-brand-600 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-amber-400"><i data-lucide="globe" class="h-4 w-4"></i>Back to RouteX site</a>
+        <button id="dash-logout" class="mt-1 flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold text-rose-600 transition hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10">
+          <i data-lucide="log-out" class="h-4 w-4"></i>Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- scrim -->
+    <div id="dash-scrim" class="fixed inset-0 z-[65] hidden bg-slate-900/50 backdrop-blur-sm"></div>
+
+    <!-- content -->
+    <div class="min-w-0 flex-1 lg:pl-0">
+      <!-- topbar -->
+      <header class="no-print sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-slate-200 bg-white/85 px-4 py-3 backdrop-blur-lg dark:border-slate-800 dark:bg-slate-950/85 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <button id="side-open" type="button" class="rounded-lg border border-slate-200 p-2 text-slate-600 dark:border-slate-700 dark:text-slate-300 lg:hidden" aria-label="Open sidebar menu"><i data-lucide="menu" class="h-5 w-5"></i></button>
+          <div class="min-w-0">
+            <h1 id="page-title" class="truncate font-display text-lg font-extrabold text-slate-900 dark:text-white">Overview</h1>
+            <p id="page-sub" class="text-xs text-slate-400">Your at-a-glance ride summary</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="dash-theme-toggle" type="button" class="relative hidden h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400 sm:inline-flex" aria-label="Toggle dark mode" title="Toggle dark/light">
+            <i data-lucide="sun" class="dash-theme-sun h-5 w-5 hidden"></i>
+            <i data-lucide="moon" class="dash-theme-moon h-5 w-5"></i>
+          </button>
+          <button id="dash-dir-toggle" type="button" class="relative hidden h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400 sm:inline-flex" aria-label="Toggle text direction" title="Toggle RTL/LTR">
+            <i data-lucide="arrow-right-left" class="dash-dir-rtl h-5 w-5 hidden"></i>
+            <i data-lucide="arrow-left-right" class="dash-dir-ltr h-5 w-5"></i>
+          </button>
+          <button data-section="notif" type="button" class="relative rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:text-brand-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-amber-400" aria-label="Open notifications">
+            <i data-lucide="bell" class="h-5 w-5"></i>
+            <span id="top-notif-dot" class="absolute right-1.5 top-1.5 hidden h-2.5 w-2.5 rounded-full bg-rose-500"></span>
+          </button>
+          <button id="dash-logout-btn" type="button" class="hidden items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200 lg:inline-flex">
+            <i data-lucide="log-out" class="h-4 w-4"></i><span class="hidden sm:inline">Logout</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="p-4 sm:p-6 lg:p-8">
+        <!-- ======== OVERVIEW ======== -->
+        <section id="sec-overview" class="dash-section space-y-6">
+          <div id="greet-card" class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 to-brand-950 p-6 text-white shadow-2xl shadow-brand-900/20 sm:p-8">
+            <div class="pointer-events-none absolute inset-0 bg-grid opacity-25"></div>
+            <div class="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p id="greet-greeting" class="font-display text-2xl font-extrabold sm:text-3xl"></p>
+                <p id="greet-date" class="mt-1 text-sm text-slate-300"></p>
+              </div>
+              <div id="greet-status" class="flex max-w-sm items-center gap-3 rounded-2xl border border-white/15 bg-white/10 p-4 backdrop-blur">
+                <span id="greet-status-icon" class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-400/20 text-amber-300"><i data-lucide="bus-front" class="h-6 w-6"></i></span>
+                <div class="min-w-0">
+                  <p id="greet-status-label" class="text-xs uppercase tracking-wide text-slate-300">Bus status</p>
+                  <p id="greet-status-text" class="truncate text-sm font-bold"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-200">
+            <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0"></i>
+            <span><span class="font-bold">Demo dashboard:</span> no login needed. All bus, ride and payment data is a frontend simulation — explore freely, nothing is real or stored on a server.</span>
+          </div>
+
+          <div id="ov-cards" class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4"></div>
+          <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <div id="ov-sub" class="rounded-3xl border"></div>
+            <div id="ov-actions" class="rounded-3xl border"></div>
+          </div>
+        </section>
+
+        <!-- ======== LIVE TRACKING ======== -->
+        <section id="sec-tracking" class="dash-section hidden space-y-5">
+          <div class="rounded-2xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-400/30 dark:bg-amber-400/10 dark:text-amber-200">
+            <span class="font-bold">Demo mode:</span> bus movement is simulated frontend data, not real GPS. Live feeds activate with a production RouteX driver unit.
+          </div>
+
+          <div class="map-panel relative overflow-hidden rounded-3xl border border-slate-800 p-4 sm:p-5">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2 text-sm font-bold text-white"><i data-lucide="navigation" class="h-4 w-4 text-amber-400"></i><span id="tr-route-label"></span></div>
+              <span id="tr-status" class="rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide"></span>
+            </div>
+            <svg id="tr-map" viewBox="0 0 640 320" class="w-full rounded-2xl" role="img" aria-label="Live bus tracking map"></svg>
+            <div class="mt-4 grid grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+              <div class="rounded-xl bg-white/5 px-4 py-3 text-slate-200"><p class="text-[11px] uppercase tracking-wide text-slate-400">Bus location</p><p id="tr-location" class="font-bold text-white"></p></div>
+              <div class="rounded-xl bg-white/5 px-4 py-3 text-slate-200"><p class="text-[11px] uppercase tracking-wide text-slate-400">Estimated arrival</p><p id="tr-eta" class="font-bold text-amber-300"></p></div>
+              <div class="rounded-xl bg-white/5 px-4 py-3 text-slate-200"><p class="text-[11px] uppercase tracking-wide text-slate-400">Stops away</p><p id="tr-stops" class="font-bold text-white"></p></div>
+            </div>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-3">
+            <div id="tr-card-route" class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"></div>
+            <div id="tr-card-bus" class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"></div>
+            <div id="tr-card-stop" class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"></div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Reset the simulated journey back to the depot and watch the arrival again.</p>
+            <button id="tr-restart" class="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-bold text-white shadow shadow-brand-600/25 transition hover:bg-brand-700">
+              <i data-lucide="rotate-ccw" class="h-4 w-4"></i>Restart simulation
+            </button>
+          </div>
+        </section>
+
+        <!-- ======== ROUTE DETAILS ======== -->
+        <section id="sec-route" class="dash-section hidden">
+          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center gap-3 border-b border-slate-200 bg-slate-50 px-6 py-4 dark:border-slate-800 dark:bg-slate-900/60">
+              <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="route" class="h-5 w-5"></i></span>
+              <div><h3 class="font-display font-bold text-slate-900 dark:text-white">Assigned Route Details</h3><p class="text-xs text-slate-400">Fixed schedule set at registration</p></div>
+            </div>
+            <div id="route-details" class="grid gap-px bg-slate-200 dark:bg-slate-800 sm:grid-cols-2 lg:grid-cols-3"></div>
+          </div>
+          <div class="mt-6 rounded-3xl border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-400/20 dark:bg-emerald-400/5">
+            <h4 class="flex items-center gap-2 font-display font-bold text-emerald-900 dark:text-emerald-200"><i data-lucide="phone-call" class="h-5 w-5"></i>Emergency contact</h4>
+            <p class="mt-2 text-sm text-emerald-800 dark:text-emerald-300">School transport helpline: <b>+91 80001 23456</b> (24x7). Keep this saved in your phone for any morning-of emergency.</p>
+          </div>
+        </section>
+
+        <!-- ======== BOARDING LOGS ======== -->
+        <section id="sec-logs" class="dash-section hidden">
+          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+              <div class="flex items-center gap-3">
+                <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="calendar-check" class="h-5 w-5"></i></span>
+                <div><h3 class="font-display font-bold text-slate-900 dark:text-white">Daily Ride Records</h3><p class="text-xs text-slate-400">Boarding &amp; alighting history</p></div>
+              </div>
+              <div class="flex flex-wrap gap-2 text-[11px] font-bold">
+                <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-emerald-600 dark:text-emerald-400">Boarded</span>
+                <span class="rounded-full bg-amber-500/10 px-3 py-1 text-amber-600 dark:text-amber-400">Delayed</span>
+                <span class="rounded-full bg-slate-200 px-3 py-1 text-slate-600 dark:bg-slate-800 dark:text-slate-300">Pending</span>
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[560px] text-sm">
+                <thead>
+                  <tr class="border-b border-slate-200 text-left text-xs font-bold uppercase tracking-wider text-slate-400 dark:border-slate-800">
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Boarding time</th>
+                    <th class="px-4 py-3">Boarding status</th>
+                    <th class="px-4 py-3">Drop time</th>
+                    <th class="px-4 py-3">Alighting status</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-tbody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== SUBSCRIPTION ======== -->
+        <section id="sec-sub" class="dash-section hidden">
+          <div id="sub-current" class="rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"></div>
+          <div class="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-3">
+            <div class="lg:col-span-2">
+              <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+                <h3 class="font-display font-bold text-slate-900 dark:text-white">Manage subscription</h3>
+                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Switch plans anytime, renew for the next cycle, or cancel ahead of your billing date.</p>
+                <div class="mt-5 flex flex-wrap gap-3">
+                  <button id="btn-change-plan" class="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-3 text-sm font-bold text-white shadow shadow-brand-600/25 transition hover:bg-brand-700"><i data-lucide="refresh-cw" class="h-4 w-4"></i>Change plan</button>
+                  <button id="btn-renew" class="inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300"><i data-lucide="rotate-cw" class="h-4 w-4"></i>Renew plan</button>
+                  <button id="btn-cancel" class="inline-flex items-center gap-2 rounded-xl border-2 border-rose-200 px-5 py-3 text-sm font-bold text-rose-600 transition hover:border-rose-400 hover:bg-rose-50 dark:border-rose-500/30 dark:text-rose-400 dark:hover:bg-rose-500/10"><i data-lucide="ban" class="h-4 w-4"></i>Cancel subscription</button>
+                </div>
+              </div>
+            </div>
+            <div class="rounded-3xl border border-brand-200 bg-brand-50 p-6 dark:border-slate-800 dark:bg-slate-900">
+              <h4 class="flex items-center gap-2 font-display font-bold text-slate-900 dark:text-white"><i data-lucide="shield-check" class="h-5 w-5 text-brand-600 dark:text-amber-400"></i>Subscription benefits</h4>
+              <p id="sub-benefits" class="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== PAYMENTS ======== -->
+        <section id="sec-pay" class="dash-section hidden">
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <div class="flex items-center gap-3">
+                <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="wallet" class="h-6 w-6"></i></span>
+                <div><h3 class="font-display font-bold text-slate-900 dark:text-white">Make a payment</h3><p class="text-sm text-slate-500 dark:text-slate-400">Simulated flow — nothing is actually charged.</p></div>
+              </div>
+              <dl class="mt-6 space-y-3 text-sm">
+                <div class="flex justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800"><dt class="text-slate-500 dark:text-slate-400">Current plan</dt><dd id="pay-plan-label" class="font-bold text-slate-900 dark:text-white"></dd></div>
+                <div class="flex justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800"><dt class="text-slate-500 dark:text-slate-400">Next billing date</dt><dd id="pay-billing" class="font-bold text-slate-900 dark:text-white"></dd></div>
+                <div class="flex justify-between gap-3 border-b border-slate-100 pb-3 dark:border-slate-800"><dt class="text-slate-500 dark:text-slate-400">Subscription status</dt><dd id="pay-status" class="font-bold text-slate-900 dark:text-white"></dd></div>
+                <div class="flex justify-between gap-3 pt-1"><dt class="text-base font-bold text-slate-900 dark:text-white">Amount due</dt><dd id="pay-amount" class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400"></dd></div>
+              </dl>
+              <button data-modal-open="modal-pay" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-600 px-6 py-3.5 text-sm font-extrabold text-white shadow-lg shadow-brand-600/30 transition hover:bg-brand-700">
+                <i data-lucide="credit-card" class="h-5 w-5"></i>Pay now
+              </button>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h3 class="font-display font-bold text-slate-900 dark:text-white">Payment tips</h3>
+              <ul class="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="h-5 w-5 shrink-0 text-emerald-500"></i>Pay early to keep tracking active without interruption.</li>
+                <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="h-5 w-5 shrink-0 text-emerald-500"></i>Use UPI, any major card, or net banking — all supported here.</li>
+                <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="h-5 w-5 shrink-0 text-emerald-500"></i>Every payment generates a downloadable, printable receipt.</li>
+                <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="h-5 w-5 shrink-0 text-emerald-500"></i>Your transaction history is stored locally for this demo.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== PAYMENT HISTORY ======== -->
+        <section id="sec-history" class="dash-section hidden">
+          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex items-center gap-3 border-b border-slate-200 px-6 py-4 dark:border-slate-800">
+              <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="receipt" class="h-5 w-5"></i></span>
+              <div><h3 class="font-display font-bold text-slate-900 dark:text-white">Payment History</h3><p class="text-xs text-slate-400">View, print or download any receipt</p></div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[640px] text-sm">
+                <thead>
+                  <tr class="border-b border-slate-200 text-left text-xs font-bold uppercase tracking-wider text-slate-400 dark:border-slate-800">
+                    <th class="px-4 py-3">Receipt ID</th>
+                    <th class="px-4 py-3">Date</th>
+                    <th class="px-4 py-3">Plan</th>
+                    <th class="px-4 py-3">Amount</th>
+                    <th class="px-4 py-3">Status</th>
+                    <th class="px-4 py-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="history-tbody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== NOTIFICATIONS ======== -->
+        <section id="sec-notif" class="dash-section hidden">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="bell-ring" class="h-6 w-6"></i></span>
+              <div><h3 class="font-display text-lg font-extrabold text-slate-900 dark:text-white">Notifications</h3><p class="text-xs text-slate-400">Simulated alerts — not real push notifications</p></div>
+            </div>
+            <button id="notif-mark-all" class="inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300">
+              <i data-lucide="check-check" class="h-4 w-4"></i>Mark all as read
+            </button>
+          </div>
+          <div id="notif-list" class="mt-6 space-y-3"></div>
+        </section>
+
+        <!-- ======== PROFILE ======== -->
+        <section id="sec-profile" class="dash-section hidden">
+          <form id="profile-form" class="grid gap-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-8 lg:grid-cols-2" novalidate>
+            <div>
+              <h3 class="flex items-center gap-2 font-display font-bold text-slate-900 dark:text-white"><span class="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-600 text-xs font-extrabold text-white">P</span>Parent information</h3>
+              <div class="mt-5 space-y-4">
+                <div><label for="pf-name" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Full name</label><input id="pf-name" class="rx-input" type="text"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pf-name"></p></div>
+                <div><label for="pf-email" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Email</label><input id="pf-email" class="rx-input" type="email"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pf-email"></p></div>
+                <div><label for="pf-phone" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Phone</label><input id="pf-phone" class="rx-input" type="tel"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pf-phone"></p></div>
+                <div><label for="pf-address" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Address</label><textarea id="pf-address" rows="2" class="rx-input resize-none" placeholder="House &amp; street address"></textarea></div>
+              </div>
+            </div>
+            <div>
+              <h3 class="flex items-center gap-2 font-display font-bold text-slate-900 dark:text-white"><span class="flex h-7 w-7 items-center justify-center rounded-lg bg-amber-400 text-xs font-extrabold text-slate-900">C</span>Child information</h3>
+              <div class="mt-5 space-y-4">
+                <div><label for="pf-child" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Child name</label><input id="pf-child" class="rx-input" type="text"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pf-child"></p></div>
+                <div><label for="pf-school" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">School</label><input id="pf-school" class="rx-input" type="text"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pf-school"></p></div>
+                <div><label for="pf-pickup" class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Pickup stop</label><input id="pf-pickup" class="rx-input" type="text"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pf-pickup"></p></div>
+                <div>
+                  <label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Preferred route</label>
+                  <select id="pf-route" class="rx-input"></select>
+                </div>
+              </div>
+            </div>
+            <div class="lg:col-span-2">
+              <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-brand-600 px-6 py-3 text-sm font-extrabold text-white shadow-lg shadow-brand-600/30 transition hover:bg-brand-700"><i data-lucide="save" class="h-4 w-4"></i>Save profile</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- change plan -->
+  <div id="modal-change-plan" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-panel max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900 sm:p-7">
+      <div class="flex items-start justify-between gap-4">
+        <div><h3 class="font-display text-lg font-extrabold text-slate-900 dark:text-white">Change your plan</h3><p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Your next payment uses the new plan's price.</p></div>
+        <button type="button" data-modal-close="modal-change-plan" class="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+      </div>
+      <div id="plan-options" class="mt-5 space-y-2.5"></div>
+      <div class="mt-6 flex gap-3">
+        <button type="button" data-modal-close="modal-change-plan" class="flex-1 rounded-xl border-2 border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-600 hover:border-slate-400 dark:border-slate-600 dark:text-slate-300">Cancel</button>
+        <button id="plan-confirm" class="flex-1 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-bold text-white shadow shadow-brand-600/25 transition hover:bg-brand-700">Continue to payment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- payment -->
+  <div id="modal-pay" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-panel max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900 sm:p-7">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="lock" class="h-6 w-6"></i></span>
+          <div><h3 class="font-display text-lg font-extrabold text-slate-900 dark:text-white">Secure payment (demo)</h3><p id="pay-modal-sub" class="text-sm text-slate-500 dark:text-slate-400"></p></div>
+        </div>
+        <button type="button" data-modal-close="modal-pay" class="rounded-lg p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200" aria-label="Close"><i data-lucide="x" class="h-5 w-5"></i></button>
+      </div>
+
+      <div class="mt-5 flex items-center justify-between rounded-2xl bg-slate-50 px-5 py-4 dark:bg-slate-800">
+        <div><p class="text-sm font-bold text-slate-900 dark:text-white" id="pay-modal-plan">Standard plan</p><p class="text-xs text-slate-400" id="pay-modal-bill">Monthly billing</p></div>
+        <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400" id="pay-modal-amount"></p>
+      </div>
+
+      <div class="mt-5 grid grid-cols-1 gap-2 text-sm font-bold sm:grid-cols-3">
+        <button type="button" data-pay-method="upi" class="rounded-xl border-2 px-3 py-3 transition flex items-center justify-center gap-2"><i data-lucide="smartphone" class="h-4 w-4"></i>UPI</button>
+        <button type="button" data-pay-method="card" class="rounded-xl border-2 px-3 py-3 transition flex items-center justify-center gap-2"><i data-lucide="credit-card" class="h-4 w-4"></i>Card</button>
+        <button type="button" data-pay-method="net" class="rounded-xl border-2 px-3 py-3 transition flex items-center justify-center gap-2"><i data-lucide="landmark" class="h-4 w-4"></i>Net Banking</button>
+      </div>
+
+      <div id="pay-upi" class="pay-panel mt-5 hidden">
+        <label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">UPI ID</label>
+        <input id="pay-upi-id" class="rx-input" type="text" placeholder="yourname@bank">
+        <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pay-upi-id"></p>
+      </div>
+
+      <div id="pay-card" class="pay-panel mt-5 hidden">
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="sm:col-span-2"><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Card number</label><input id="pay-card-num" class="rx-input" type="text" inputmode="numeric" placeholder="1234 5678 9012 3456"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pay-card-num"></p></div>
+          <div><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Expiry</label><input id="pay-card-exp" class="rx-input" type="text" placeholder="MM/YY"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pay-card-exp"></p></div>
+          <div><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">CVV</label><input id="pay-card-cvv" class="rx-input" type="password" maxlength="4" placeholder="•••"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pay-card-cvv"></p></div>
+          <div class="sm:col-span-2"><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Name on card</label><input id="pay-card-name" class="rx-input" type="text" placeholder="Name as on card"><p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pay-card-name"></p></div>
+        </div>
+      </div>
+
+      <div id="pay-net" class="pay-panel mt-5 hidden">
+        <label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-200">Select bank</label>
+        <select id="pay-net-bank" class="rx-input">
+          <option value="">Choose your bank</option>
+          <option>HDFC Bank</option><option>ICICI Bank</option><option>State Bank of India</option>
+          <option>Axis Bank</option><option>Kotak Mahindra Bank</option><option>Punjab National Bank</option>
+        </select>
+        <p class="mt-1 hidden text-xs font-medium text-rose-500" data-err="pay-net-bank"></p>
+      </div>
+
+      <div class="mt-6 flex gap-3">
+        <button id="pay-cancel" type="button" data-modal-close="modal-pay" class="flex-1 rounded-xl border-2 border-slate-300 px-4 py-3 text-sm font-bold text-slate-600 hover:border-slate-400 dark:border-slate-600 dark:text-slate-300">Cancel</button>
+        <button id="pay-submit" class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-extrabold text-white shadow shadow-emerald-600/25 transition hover:bg-emerald-700 disabled:opacity-60">
+          <i data-lucide="shield-check" class="h-4 w-4"></i><span>Pay</span>
+        </button>
+      </div>
+      <p class="mt-3 text-center text-[11px] text-slate-400">Simulated gateway — no real money moves in this demo.</p>
+    </div>
+  </div>
+
+  <!-- receipt -->
+  <div id="modal-receipt" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-panel max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900 sm:p-8">
+      <div class="print-area" id="receipt-print"></div>
+      <div class="no-print mt-6 flex flex-col gap-3 sm:flex-row">
+        <button id="receipt-print-btn" class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300"><i data-lucide="printer" class="h-4 w-4"></i>Print</button>
+        <button id="receipt-download-btn" class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300"><i data-lucide="download" class="h-4 w-4"></i>Download</button>
+        <button data-modal-close="modal-receipt" class="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-2.5 text-sm font-bold text-white shadow shadow-brand-600/25 transition hover:bg-brand-700"><i data-lucide="x" class="h-4 w-4"></i>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- cancel subscription -->
+  <div id="modal-cancel" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-panel max-w-sm rounded-3xl border border-slate-200 bg-white p-6 text-center shadow-2xl dark:border-slate-700 dark:bg-slate-900 sm:p-8">
+      <span class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-600"><i data-lucide="ban" class="h-7 w-7"></i></span>
+      <h3 class="mt-4 font-display text-lg font-extrabold text-slate-900 dark:text-white">Cancel subscription?</h3>
+      <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Your service (including live tracking) stays active until <b id="cancel-till" class="text-slate-700 dark:text-slate-200"></b>. After that the subscription ends. You can renew anytime.</p>
+      <div class="mt-6 flex gap-3">
+        <button type="button" data-modal-close="modal-cancel" class="flex-1 rounded-xl border-2 border-slate-300 px-4 py-2.5 text-sm font-bold text-slate-600 hover:border-slate-400 dark:border-slate-600 dark:text-slate-300">Keep it</button>
+        <button id="cancel-confirm" class="flex-1 rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-bold text-white shadow shadow-rose-600/25 transition hover:bg-rose-700">Yes, cancel</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

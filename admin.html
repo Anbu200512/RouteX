@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fleet Admin — RouteX</title>
+  <meta name="description" content="RouteX fleet admin dashboard: fleet, drivers, students, routes and live alerts at a glance.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+
+  <div class="flex">
+    <!-- sidebar -->
+    <aside id="dash-sidebar" class="fixed inset-y-0 left-0 z-[70] flex w-72 max-w-[85vw] -translate-x-full flex-col border-r border-slate-200 bg-white transition-transform duration-300 dark:border-slate-800 dark:bg-slate-950 lg:sticky lg:top-0 lg:h-screen lg:translate-x-0">
+      <div class="flex items-center justify-between border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+        <a href="index.html" class="flex items-center gap-2.5" aria-label="RouteX home">
+          <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-900 text-amber-300 shadow-lg shadow-brand-600/30"><i data-lucide="bus-front" class="h-5 w-5"></i></span>
+          <span class="leading-tight">
+            <span class="block font-display text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">Route<span class="text-brand-600 dark:text-amber-400">X</span></span>
+            <span class="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">Fleet Admin</span>
+          </span>
+        </a>
+        <button id="side-close" type="button" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 lg:hidden" aria-label="Close sidebar"><i data-lucide="x" class="h-5 w-5"></i></button>
+      </div>
+
+      <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-4" aria-label="Admin dashboard" id="admin-nav">
+        <button class="side-link" data-asec="overview"><i data-lucide="layout-dashboard" class="h-5 w-5"></i>Overview</button>
+        <button class="side-link" data-asec="fleet"><i data-lucide="bus" class="h-5 w-5"></i>Fleet</button>
+        <button class="side-link" data-asec="drivers"><i data-lucide="users" class="h-5 w-5"></i>Drivers</button>
+        <button class="side-link" data-asec="students"><i data-lucide="graduation-cap" class="h-5 w-5"></i>Students</button>
+        <button class="side-link" data-asec="routes"><i data-lucide="route" class="h-5 w-5"></i>Routes</button>
+        <button class="side-link" data-asec="alerts"><i data-lucide="bell-ring" class="h-5 w-5"></i>Live Alerts<span id="admin-alert-badge" class="ml-auto hidden rounded-full bg-rose-600 px-2 py-0.5 text-[10px] font-extrabold text-white"></span></button>
+      </nav>
+
+      <div class="border-t border-slate-200 p-3 dark:border-slate-800">
+        <div class="mb-2 grid grid-cols-2 gap-2">
+          <button id="side-theme-toggle" type="button" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400" aria-label="Toggle dark mode" title="Toggle dark/light">
+            <i data-lucide="sun" class="dash-theme-sun h-4 w-4 hidden"></i>
+            <i data-lucide="moon" class="dash-theme-moon h-4 w-4"></i><span>Theme</span>
+          </button>
+          <button id="side-dir-toggle" type="button" class="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-600 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400" aria-label="Toggle text direction" title="Toggle RTL/LTR">
+            <i data-lucide="arrow-right-left" class="dash-dir-rtl h-4 w-4 hidden"></i>
+            <i data-lucide="arrow-left-right" class="dash-dir-ltr h-4 w-4"></i><span>RTL/LTR</span>
+          </button>
+        </div>
+        <a href="login.html" class="flex items-center gap-3 rounded-xl border-2 border-rose-100 bg-rose-50 px-3.5 py-3 text-sm font-bold text-rose-600 transition hover:border-rose-200 hover:bg-rose-100 dark:border-rose-900/60 dark:bg-rose-500/10 dark:text-rose-300 dark:hover:border-rose-700 dark:hover:bg-rose-500/20" aria-label="Logout">
+          <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-300"><i data-lucide="log-out" class="h-4 w-4"></i></span>
+          <span>Logout</span>
+        </a>
+        <a href="index.html" class="mx-1 mt-2 flex items-center gap-2 rounded-lg px-2 py-2 text-xs font-semibold text-slate-500 transition hover:bg-slate-100 hover:text-brand-600 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-amber-400"><i data-lucide="globe" class="h-4 w-4"></i>Back to RouteX site</a>
+      </div>
+    </aside>
+
+    <!-- scrim -->
+    <div id="dash-scrim" class="fixed inset-0 z-[65] hidden bg-slate-900/50 backdrop-blur-sm"></div>
+
+    <!-- content -->
+    <div class="min-w-0 flex-1 lg:pl-0">
+      <header class="no-print sticky top-0 z-40 flex items-center justify-between gap-3 border-b border-slate-200 bg-white/85 px-4 py-3 backdrop-blur-lg dark:border-slate-800 dark:bg-slate-950/85 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-3">
+          <button id="side-open" type="button" class="rounded-lg border border-slate-200 p-2 text-slate-600 dark:border-slate-700 dark:text-slate-300 lg:hidden" aria-label="Open sidebar menu"><i data-lucide="menu" class="h-5 w-5"></i></button>
+          <div class="min-w-0">
+            <h1 id="page-title" class="truncate font-display text-lg font-extrabold text-slate-900 dark:text-white">Overview</h1>
+            <p id="page-sub" class="text-xs text-slate-400">Fleet status at a glance</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="dash-theme-toggle" type="button" class="relative hidden h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400 sm:inline-flex" aria-label="Toggle dark mode" title="Toggle dark/light">
+            <i data-lucide="sun" class="dash-theme-sun h-5 w-5 hidden"></i>
+            <i data-lucide="moon" class="dash-theme-moon h-5 w-5"></i>
+          </button>
+          <button id="dash-dir-toggle" type="button" class="relative hidden h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-brand-500 dark:hover:text-amber-400 sm:inline-flex" aria-label="Toggle text direction" title="Toggle RTL/LTR">
+            <i data-lucide="arrow-right-left" class="dash-dir-rtl h-5 w-5 hidden"></i>
+            <i data-lucide="arrow-left-right" class="dash-dir-ltr h-5 w-5"></i>
+          </button>
+          <button data-asec="alerts" type="button" class="relative rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:text-brand-600 dark:border-slate-700 dark:text-slate-300 dark:hover:text-amber-400" aria-label="Open alerts">
+            <i data-lucide="bell" class="h-5 w-5"></i>
+            <span id="top-alert-dot" class="absolute right-1.5 top-1.5 hidden h-2.5 w-2.5 rounded-full bg-rose-500"></span>
+          </button>
+          <a href="login.html" class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-slate-700 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200"><i data-lucide="user-round" class="h-4 w-4"></i><span class="hidden sm:inline">Parent Portal</span></a>
+        </div>
+      </header>
+
+      <main class="p-4 sm:p-6 lg:p-8">
+        <!-- ======== OVERVIEW ======== -->
+        <section id="asec-overview" class="dash-section space-y-6">
+          <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 to-brand-950 p-6 text-white shadow-2xl shadow-brand-900/20 sm:p-8">
+            <div class="pointer-events-none absolute inset-0 bg-grid opacity-25"></div>
+            <div class="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p class="font-display text-2xl font-extrabold sm:text-3xl">Good morning, Fleet Team</p>
+                <p id="ad-greet-date" class="mt-1 text-sm text-slate-300"></p>
+              </div>
+              <div class="flex items-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-4 py-3.5 backdrop-blur">
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-400/20 text-emerald-300"><i data-lucide="activity" class="h-6 w-6"></i></span>
+                <div>
+                  <p class="text-xs uppercase tracking-wide text-slate-300">Fleet online</p>
+                  <p id="ad-fleet-online" class="text-sm font-bold">—</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="ad-stats" class="grid gap-5 sm:grid-cols-2 xl:grid-cols-4"></div>
+
+          <div class="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <div class="flex items-center justify-between">
+                <h2 class="font-display text-base font-bold text-slate-900 dark:text-white">Routes today</h2>
+                <a href="#asec-routes" data-goto-asec="routes" class="text-sm font-semibold text-brand-600 dark:text-amber-400">View all</a>
+              </div>
+              <div id="ad-route-mini" class="mt-4 space-y-3"></div>
+            </div>
+            <div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h2 class="font-display text-base font-bold text-slate-900 dark:text-white">Recent alerts</h2>
+              <div id="ad-alert-mini" class="mt-4 space-y-3"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== FLEET ======== -->
+        <section id="asec-fleet" class="dash-section hidden space-y-5">
+          <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+              <h2 class="font-display text-base font-bold text-slate-900 dark:text-white">Bus fleet</h2>
+              <div class="flex gap-2">
+                <input id="fl-search" type="search" placeholder="Search bus or route…" class="rx-input" aria-label="Search fleet">
+              </div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[560px] text-left text-sm">
+                <thead class="border-b border-slate-200 text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800">
+                  <tr>
+                    <th class="px-4 py-3 font-semibold">Bus</th>
+                    <th class="px-4 py-3 font-semibold">Route</th>
+                    <th class="px-4 py-3 font-semibold">Status</th>
+                    <th class="px-4 py-3 font-semibold">GPS</th>
+                    <th class="px-4 py-3 font-semibold">Speed</th>
+                  </tr>
+                </thead>
+                <tbody id="fleet-tbody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+              </table>
+              <p id="fl-count" class="px-5 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== DRIVERS ======== -->
+        <section id="asec-drivers" class="dash-section hidden space-y-5">
+          <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <div id="dr-stats" class="col-span-full grid gap-5 sm:grid-cols-3 xl:grid-cols-4"></div>
+          </div>
+          <div id="dr-cards" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+        </section>
+
+        <!-- ======== STUDENTS ======== -->
+        <section id="asec-students" class="dash-section hidden space-y-5">
+          <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 dark:border-slate-800">
+              <h2 class="font-display text-base font-bold text-slate-900 dark:text-white">Students on board</h2>
+              <input id="st-search" type="search" placeholder="Search student…" class="rx-input" aria-label="Search students">
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[560px] text-left text-sm">
+                <thead class="border-b border-slate-200 text-xs uppercase tracking-wide text-slate-400 dark:border-slate-800">
+                  <tr>
+                    <th class="px-4 py-3 font-semibold">Student</th>
+                    <th class="px-4 py-3 font-semibold">Bus</th>
+                    <th class="px-4 py-3 font-semibold">Route</th>
+                    <th class="px-4 py-3 font-semibold">Pickup</th>
+                    <th class="px-4 py-3 font-semibold">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="st-tbody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+              </table>
+              <p id="st-count" class="px-5 py-3 text-xs font-semibold text-slate-400 dark:text-slate-500"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== ROUTES ======== -->
+        <section id="asec-routes" class="dash-section hidden space-y-5">
+          <div id="ad-routes" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+        </section>
+
+        <!-- ======== ALERTS ======== -->
+        <section id="asec-alerts" class="dash-section hidden space-y-5">
+          <div id="ad-alerts" class="space-y-3"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      var $ = function (id) { return document.getElementById(id); };
+
+      var ROUTES = [
+        { id: 'r1', name: 'Greenwood Route', busNo: 'SB-104', driver: 'Raj Sharma', color: '#3b82f6', onTime: '97%', students: 42 },
+        { id: 'r2', name: 'Sunrise Circuit', busNo: 'SB-108', driver: 'Meena Iyer', color: '#f59e0b', onTime: '95%', students: 38 },
+        { id: 'r3', name: 'Maple Valley', busNo: 'SB-112', driver: 'Arun Verma', color: '#10b981', onTime: '98%', students: 45 },
+        { id: 'r4', name: 'Hillcrest Loop', busNo: 'SB-116', driver: 'Kiran Rao', color: '#8b5cf6', onTime: '96%', students: 31 },
+        { id: 'r5', name: 'Lakeshore Line', busNo: 'SB-120', driver: 'Divya Nair', color: '#e11d48', onTime: '94%', students: 36 },
+        { id: 'r6', name: 'Oakfield Express', busNo: 'SB-124', driver: 'Vikram Singh', color: '#06b6d4', onTime: '97%', students: 40 }
+      ];
+
+      var FLEET = ROUTES.map(function (r, i) {
+        return {
+          busNo: r.busNo, route: r.name, color: r.color,
+          status: i < 4 ? 'On route' : 'Depot',
+          gps: 'Online',
+          speed: i < 4 ? String(28 + i * 4) + ' km/h' : '0 km/h'
+        };
+      });
+
+      var DRIVERS = [
+        { name: 'Raj Sharma', busNo: 'SB-104', phone: '+91 98765 00104', rating: 4.9, trips: 284, status: 'On route', color: '#3b82f6' },
+        { name: 'Meena Iyer', busNo: 'SB-108', phone: '+91 98765 00108', rating: 4.8, trips: 260, status: 'On route', color: '#f59e0b' },
+        { name: 'Arun Verma', busNo: 'SB-112', phone: '+91 98765 00112', rating: 5.0, trips: 312, status: 'On route', color: '#10b981' },
+        { name: 'Kiran Rao', busNo: 'SB-116', phone: '+91 98765 00116', rating: 4.7, trips: 198, status: 'On route', color: '#8b5cf6' },
+        { name: 'Divya Nair', busNo: 'SB-120', phone: '+91 98765 00120', rating: 4.9, trips: 240, status: 'On leave', color: '#e11d48' },
+        { name: 'Vikram Singh', busNo: 'SB-124', phone: '+91 98765 00124', rating: 4.6, trips: 175, status: 'Depot', color: '#06b6d4' }
+      ];
+
+      var STUDENTS = [
+        { name: 'Aarav Mehta', bus: 'SB-104', route: 'Greenwood', pickup: 'Maple Street • 7:48 AM', status: 'On board' },
+        { name: 'Sara Verma', bus: 'SB-108', route: 'Sunrise', pickup: 'Vista Towers • 7:45 AM', status: 'On board' },
+        { name: 'Rohan Nair', bus: 'SB-112', route: 'Maple Valley', pickup: 'Maple Highrise • 7:47 AM', status: 'On board' },
+        { name: 'Priya Iyer', bus: 'SB-116', route: 'Hillcrest', pickup: 'Hillcrest Road • 7:54 AM', status: 'Picked up' },
+        { name: 'Anaya Rao', bus: 'SB-120', route: 'Lakeshore', pickup: 'Lakeshore Drive • 7:50 AM', status: 'On board' },
+        { name: 'Kabir Singh', bus: 'SB-124', route: 'Oakfield', pickup: 'Oakfield Gate • 7:52 AM', status: 'En route to stop' }
+      ];
+
+      var ALERTS = [
+        { icon: 'navigation', color: 'text-amber-500 bg-amber-500/10', title: 'SB-108 on a new route', text: 'Sunrise Circuit rerouted around Victoria Road due to traffic.', time: '2 min ago', kind: 'info' },
+        { icon: 'gauge', color: 'text-emerald-500 bg-emerald-500/10', title: 'Speed normalised', text: 'SB-104 returned to safe zone speed near Emerald Academy.', time: '18 min ago', kind: 'info' },
+        { icon: 'shield-alert', color: 'text-rose-500 bg-rose-500/10', title: 'Geofence breach flagged', text: 'SB-116 strayed outside its approved corridor for 40 seconds.', time: '41 min ago', kind: 'warn' },
+        { icon: 'bell-ring', color: 'text-brand-600 bg-brand-600/10 dark:text-amber-400 dark:bg-amber-400/10', title: 'Drop confirmed', text: 'SB-112 completed all morning drops at Emera Garden Block.', time: '1 hr ago', kind: 'info' }
+      ];
+
+      var ASECTIONS = {
+        overview: ['Overview', 'Fleet status at a glance'],
+        fleet: ['Fleet', 'All buses and route status'],
+        drivers: ['Drivers', 'Verified driver roster'],
+        students: ['Students', 'Students currently on board'],
+        routes: ['Routes', 'All active routes'],
+        alerts: ['Live Alerts', 'Operational notifications']
+      };
+
+      function showSection(name) {
+        if (!ASECTIONS[name]) return;
+        document.querySelectorAll('.dash-section').forEach(function (s) { s.classList.add('hidden'); });
+        var sec = $('asec-' + name);
+        if (sec) sec.classList.remove('hidden');
+        document.querySelectorAll('.side-link').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-asec') === name); });
+        var meta = ASECTIONS[name];
+        if ($('page-title')) $('page-title').textContent = meta[0];
+        if ($('page-sub')) $('page-sub').textContent = meta[1];
+        closeSidebar();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (window.RouteX && RouteX.refreshIcons) RouteX.refreshIcons();
+      }
+
+      function openSidebar() {
+        var sb = $('dash-sidebar'), sc = $('dash-scrim');
+        if (sb) sb.classList.remove('-translate-x-full');
+        if (sc) sc.classList.remove('hidden');
+      }
+      function closeSidebar() {
+        var sb = $('dash-sidebar'), sc = $('dash-scrim');
+        if (sb && window.innerWidth < 1024) sb.classList.add('-translate-x-full');
+        if (sc) sc.classList.add('hidden');
+      }
+
+      function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+      function renderGreet() {
+        var d = $('ad-greet-date');
+        if (d) d.textContent = new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        var on = FLEET.filter(function (f) { return f.gps === 'Online'; }).length;
+        if ($('ad-fleet-online')) $('ad-fleet-online').textContent = on + ' / ' + FLEET.length + ' buses';
+      }
+
+      function renderStats() {
+        var tracked = ROUTES.length;
+        var onBoard = STUDENTS.length;
+        var onTime = '96%';
+        var verified = DRIVERS.length;
+        var stats = [
+          { label: 'Active routes', value: String(tracked), icon: 'route', color: 'bg-brand-600/10 text-brand-600 dark:text-amber-400' },
+          { label: 'Students on board', value: String(onBoard), icon: 'graduation-cap', color: 'bg-emerald-500/10 text-emerald-600', mobileHide: true },
+          { label: 'On-time rate', value: onTime, icon: 'timer', color: 'bg-amber-400/20 text-amber-600' },
+          { label: 'Verified drivers', value: String(verified), icon: 'badge-check', color: 'bg-sky-500/10 text-sky-600' }
+        ];
+        var statsHtml = stats.map(function (s) {
+          return '<div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900' + (s.mobileHide ? ' hidden sm:block' : '') + '">' +
+            '<div class="flex items-center justify-between">' +
+            '<p class="text-sm font-semibold text-slate-500 dark:text-slate-400">' + s.label + '</p>' +
+            '<span class="flex h-10 w-10 items-center justify-center rounded-2xl ' + s.color + '"><i data-lucide="' + s.icon + '" class="h-5 w-5"></i></span></div>' +
+            '<p class="mt-3 font-display text-3xl font-extrabold text-slate-900 dark:text-white">' + s.value + '</p></div>';
+        }).join('');
+        $('ad-stats').innerHTML = statsHtml;
+      }
+
+      function renderRouteMini() {
+        var list = ROUTES.slice(0, 4).map(function (r, i) {
+          var status = i < 4 ? 'On route' : 'Depot';
+          var cls = status === 'On route' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400';
+          return '<div class="flex items-center justify-between gap-3"><div class="flex items-center gap-3"><span class="h-2.5 w-2.5 rounded-full" style="background:' + r.color + '"></span>' +
+            '<div><p class="text-sm font-bold text-slate-900 dark:text-white">' + esc(r.name) + '</p><p class="text-xs text-slate-400">' + r.busNo + ' • ' + r.students + ' students</p></div></div>' +
+            '<span class="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ' + cls + '">' + status + '</span></div>';
+        }).join('');
+        $('ad-route-mini').innerHTML = list;
+      }
+
+      function renderAlertMini() {
+        var list = ALERTS.slice(0, 3).map(function (a) {
+          return '<div class="flex items-start gap-3"><span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ' + a.color + '"><i data-lucide="' + a.icon + '" class="h-4 w-4"></i></span>' +
+            '<div class="min-w-0"><p class="text-sm font-bold text-slate-900 dark:text-white">' + esc(a.title) + '</p><p class="truncate text-xs text-slate-500 dark:text-slate-400">' + esc(a.text) + ' <span class="text-slate-400">• ' + esc(a.time) + '</span></p></div></div>';
+        }).join('');
+        $('ad-alert-mini').innerHTML = list;
+      }
+
+      function renderFleet(filter) {
+        var q = (filter || '').toLowerCase();
+        var rows = FLEET.filter(function (f) {
+          return !q || (f.busNo + ' ' + f.route + ' ' + f.speed).toLowerCase().indexOf(q) !== -1;
+        });
+        $('fleet-tbody').innerHTML = rows.map(function (f) {
+          var cls = f.status === 'On route' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400';
+          return '<tr><td class="px-4 py-3.5"><div class="flex items-center gap-3"><span class="flex h-9 w-9 items-center justify-center rounded-xl text-white" style="background:' + f.color + '"><i data-lucide="bus" class="h-4 w-4"></i></span><span class="font-bold text-slate-900 dark:text-white">' + f.busNo + '</span></div></td>' +
+            '<td class="px-4 py-3.5 text-slate-600 dark:text-slate-300">' + esc(f.route) + '</td>' +
+            '<td class="px-4 py-3.5"><span class="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ' + cls + '">' + f.status + '</span></td>' +
+            '<td class="px-4 py-3.5"><span class="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400"><span class="h-2 w-2 rounded-full bg-emerald-500"></span>' + f.gps + '</span></td>' +
+            '<td class="px-4 py-3.5 text-slate-600 dark:text-slate-300">' + f.speed + '</td></tr>';
+        }).join('');
+        $('fl-count').textContent = 'Showing ' + rows.length + ' of ' + FLEET.length + ' buses';
+      }
+
+      function renderDrivers() {
+        var stats = [
+          { label: 'Total drivers', value: String(DRIVERS.length), icon: 'users', color: 'bg-brand-600/10 text-brand-600 dark:text-amber-400' },
+          { label: 'On route', value: '4', icon: 'route', color: 'bg-emerald-500/10 text-emerald-600' },
+          { label: 'Avg rating', value: '4.8', icon: 'star', color: 'bg-amber-400/20 text-amber-600' },
+          { label: 'Verified', value: '100%', icon: 'badge-check', color: 'bg-sky-500/10 text-sky-600' }
+        ];
+        $('dr-stats').innerHTML = stats.map(function (s) {
+          return '<div class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">' +
+            '<div class="flex items-center justify-between"><p class="text-sm font-semibold text-slate-500 dark:text-slate-400">' + s.label + '</p>' +
+            '<span class="flex h-10 w-10 items-center justify-center rounded-2xl ' + s.color + '"><i data-lucide="' + s.icon + '" class="h-5 w-5"></i></span></div>' +
+            '<p class="mt-3 font-display text-3xl font-extrabold text-slate-900 dark:text-white">' + s.value + '</p></div>';
+        }).join('');
+        $('dr-cards').innerHTML = DRIVERS.map(function (d) {
+          var cls = d.status === 'On route' ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : d.status === 'On leave' ? 'bg-amber-400/20 text-amber-600' : 'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400';
+          return '<div class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">' +
+            '<div class="flex items-center gap-4"><span class="flex h-12 w-12 items-center justify-center rounded-2xl text-white" style="background:' + d.color + '"><i data-lucide="user" class="h-6 w-6"></i></span>' +
+            '<div><h3 class="font-display font-bold text-slate-900 dark:text-white">' + esc(d.name) + '</h3><p class="text-xs text-slate-400">' + d.busNo + ' • ' + esc(d.phone) + '</p></div></div>' +
+            '<div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">' +
+            '<div><p class="text-xs text-slate-400">Rating</p><p class="text-sm font-bold text-amber-500">★ ' + d.rating.toFixed(1) + '</p></div>' +
+            '<div><p class="text-xs text-slate-400">Trips</p><p class="text-sm font-bold text-slate-900 dark:text-white">' + d.trips + '</p></div>' +
+            '<span class="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ' + cls + '">' + d.status + '</span></div></div>';
+        }).join('');
+      }
+
+      function renderStudents(filter) {
+        var q = (filter || '').toLowerCase();
+        var rows = STUDENTS.filter(function (s) {
+          return !q || (s.name + ' ' + s.bus + ' ' + s.route + ' ' + s.pickup + ' ' + s.status).toLowerCase().indexOf(q) !== -1;
+        });
+        $('st-tbody').innerHTML = rows.map(function (s) {
+          var cls = s.status.indexOf('On board') !== -1 ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400' : 'bg-amber-400/20 text-amber-600';
+          return '<tr><td class="px-4 py-3.5 font-bold text-slate-900 dark:text-white">' + esc(s.name) + '</td>' +
+            '<td class="px-4 py-3.5 text-slate-600 dark:text-slate-300">' + s.bus + '</td>' +
+            '<td class="px-4 py-3.5 text-slate-600 dark:text-slate-300">' + esc(s.route) + '</td>' +
+            '<td class="px-4 py-3.5 text-slate-600 dark:text-slate-300">' + esc(s.pickup) + '</td>' +
+            '<td class="px-4 py-3.5"><span class="rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ' + cls + '">' + esc(s.status) + '</span></td></tr>';
+        }).join('');
+        $('st-count').textContent = 'Showing ' + rows.length + ' of ' + STUDENTS.length + ' students';
+      }
+
+      function renderRoutes() {
+        $('ad-routes').innerHTML = ROUTES.map(function (r) {
+          return '<div class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">' +
+            '<div class="flex items-center gap-3"><span class="flex h-11 w-11 items-center justify-center rounded-xl text-white" style="background:' + r.color + '"><i data-lucide="route" class="h-5 w-5"></i></span>' +
+            '<div><h3 class="font-display font-bold text-slate-900 dark:text-white">' + esc(r.name) + '</h3><p class="text-xs text-slate-400">' + r.busNo + ' • ' + esc(r.driver) + '</p></div></div>' +
+            '<div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 text-sm dark:border-slate-800">' +
+            '<div><p class="text-xs text-slate-400">On-time</p><p class="font-bold text-slate-900 dark:text-white">' + r.onTime + '</p></div>' +
+            '<div><p class="text-xs text-slate-400">Students</p><p class="font-bold text-slate-900 dark:text-white">' + r.students + '</p></div>' +
+            '<span class="rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400">Active</span></div></div>';
+        }).join('');
+      }
+
+      function renderAlerts() {
+        var unread = ALERTS.filter(function (a) { return a.kind === 'warn'; }).length;
+        var badge = $('admin-alert-badge');
+        if (badge) { badge.textContent = String(unread); badge.classList.toggle('hidden', unread === 0); }
+        var dot = $('top-alert-dot');
+        if (dot) dot.classList.toggle('hidden', unread === 0);
+        $('ad-alerts').innerHTML = ALERTS.map(function (a) {
+          var border = a.kind === 'warn' ? 'border-rose-200 dark:border-rose-500/30' : 'border-slate-200 dark:border-slate-800';
+          return '<div class="flex items-start gap-4 rounded-2xl border ' + border + ' bg-white p-5 shadow-sm dark:bg-slate-900">' +
+            '<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ' + a.color + '"><i data-lucide="' + a.icon + '" class="h-5 w-5"></i></span>' +
+            '<div class="min-w-0 flex-1"><p class="font-bold text-slate-900 dark:text-white">' + esc(a.title) + '</p>' +
+            '<p class="mt-0.5 text-sm text-slate-500 dark:text-slate-400">' + esc(a.text) + '</p></div>' +
+            '<span class="shrink-0 text-xs text-slate-400">' + esc(a.time) + '</span></div>';
+        }).join('');
+      }
+
+      function bindUI() {
+        document.querySelectorAll('[data-asec]').forEach(function (b) {
+          b.addEventListener('click', function () { showSection(b.getAttribute('data-asec')); });
+        });
+        document.addEventListener('click', function (e) {
+          var g = e.target && e.target.closest ? e.target.closest('[data-goto-asec]') : null;
+          if (g) showSection(g.getAttribute('data-goto-asec'));
+        });
+        $('side-open').addEventListener('click', openSidebar);
+        $('side-close').addEventListener('click', closeSidebar);
+        $('dash-scrim').addEventListener('click', closeSidebar);
+        var fl = $('fl-search');
+        if (fl) fl.addEventListener('input', function () { renderFleet(fl.value); });
+        var st = $('st-search');
+        if (st) st.addEventListener('input', function () { renderStudents(st.value); });
+        var themeBtn = $('dash-theme-toggle');
+        if (themeBtn) themeBtn.addEventListener('click', function () {
+          RouteX.toggleTheme();
+          syncDashTheme();
+          RouteX.refreshIcons();
+        });
+        var dirBtn = $('dash-dir-toggle');
+        if (dirBtn) dirBtn.addEventListener('click', function () {
+          RouteX.toggleDir();
+          syncDashDir();
+          RouteX.refreshIcons();
+        });
+        var sideThemeBtn = $('side-theme-toggle');
+        if (sideThemeBtn) sideThemeBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          RouteX.toggleTheme();
+          syncDashTheme();
+          RouteX.refreshIcons();
+        });
+        var sideDirBtn = $('side-dir-toggle');
+        if (sideDirBtn) sideDirBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          RouteX.toggleDir();
+          syncDashDir();
+          RouteX.refreshIcons();
+        });
+        syncDashTheme();
+        syncDashDir();
+      }
+
+      function syncDashTheme() {
+        var dark = false;
+        try { dark = RouteX.isDark(); } catch (e) {}
+        document.querySelectorAll('.dash-theme-sun, .dash-theme-moon').forEach(function (el) {
+          var isSun = el.className.indexOf('dash-theme-sun') !== -1;
+          el.classList.toggle('hidden', isSun ? !dark : dark);
+        });
+      }
+
+      function syncDashDir() {
+        var rtl = false;
+        try { rtl = RouteX.isRTL(); } catch (e) {}
+        document.querySelectorAll('.dash-dir-ltr, .dash-dir-rtl').forEach(function (el) {
+          var isLtr = el.className.indexOf('dash-dir-ltr') !== -1;
+          el.classList.toggle('hidden', isLtr ? rtl : !rtl);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        renderGreet();
+        renderStats();
+        renderRouteMini();
+        renderAlertMini();
+        renderFleet('');
+        renderDrivers();
+        renderStudents('');
+        renderRoutes();
+        renderAlerts();
+        bindUI();
+        showSection('overview');
+      });
+    })();
+  </script>
+</body>
+</html>

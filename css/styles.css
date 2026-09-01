@@ -1,0 +1,324 @@
+/* ============================================================
+   RouteX — Global Styles
+   Tailwind CSS CDN handles the heavy lifting; this file adds
+   custom styles, animations, print rules and small utilities.
+   ============================================================ */
+
+:root {
+  --brand: #334edf;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+}
+
+body.lock-scroll {
+  overflow: hidden;
+}
+
+/* ---------- Sticky global header ----------
+   The nav is injected into #site-header; the wrapper must
+   carry the sticky positioning so the bar stays pinned while
+   the page scrolls beneath it. */
+#site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.font-display {
+  font-family: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: #334edf;
+  color: #fff;
+}
+
+/* ---------- Custom scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* ---------- Utility helpers ---------- */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+/* ---------- Subtle grid background (map-like) ---------- */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(100, 116, 139, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(100, 116, 139, 0.14) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.dark .bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+}
+
+/* ---------- Scroll reveal ---------- */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+[data-reveal].in-view {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Keyframe animations ---------- */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float {
+  animation: floatY 5s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.7); opacity: 0.9; }
+  70% { transform: scale(2.1); opacity: 0; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: pulseRing 1.8s ease-out infinite;
+}
+
+@keyframes dashMove {
+  to { stroke-dashoffset: -24; }
+}
+.route-dash {
+  stroke-dasharray: 8 8;
+  animation: dashMove 1.2s linear infinite;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.66);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.modal-open .modal-panel {
+  animation: modalPop 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.modal-panel {
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+/* ---------- Toasts ---------- */
+#toast-stack {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: min(92vw, 22rem);
+  pointer-events: none;
+}
+.toast-item {
+  pointer-events: auto;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+  border: 1px solid #e2e8f0;
+  animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.dark .toast-item {
+  background: #1e293b;
+  color: #f1f5f9;
+  border-color: #334155;
+}
+
+/* ---------- Receipt print ---------- */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible !important;
+  }
+  .print-area {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+  #site-header,
+  #site-footer,
+  #back-to-top,
+  #toast-stack,
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ---------- Dark transit map panel ---------- */
+.map-panel {
+  background-color: #0b1120;
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.13) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.13) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* ---------- Inputs ---------- */
+.rx-input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  padding: 0.7rem 1rem;
+  font-size: 0.9rem;
+  color: #0f172a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.rx-input:focus {
+  outline: none;
+  border-color: #334edf;
+  box-shadow: 0 0 0 3px rgba(51, 78, 223, 0.18);
+}
+.rx-input::placeholder {
+  color: #94a3b8;
+}
+.dark .rx-input {
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+.dark .rx-input:focus {
+  border-color: #6690f2;
+  box-shadow: 0 0 0 3px rgba(102, 144, 242, 0.22);
+}
+
+.field-error {
+  border-color: #ef4444 !important;
+}
+.dark .field-error {
+  border-color: #f87171 !important;
+}
+
+/* ---------- Card hover lift ---------- */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 45px -18px rgba(15, 23, 42, 0.28);
+}
+.dark .card-lift:hover {
+  box-shadow: 0 20px 45px -18px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- Dashboard sidebar link ---------- */
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #64748b;
+  transition: background 0.25s, color 0.25s, transform 0.25s;
+}
+.side-link:hover {
+  background: rgba(51, 78, 223, 0.08);
+  color: #1e293b;
+  transform: translateX(3px);
+}
+.dark .side-link:hover {
+  color: #e2e8f0;
+}
+.side-link.active {
+  background: linear-gradient(135deg, #334edf, #1f2f7e);
+  color: #fff;
+  box-shadow: 0 10px 22px -10px rgba(51, 78, 223, 0.55);
+}
+.side-link.active:hover {
+  transform: none;
+}

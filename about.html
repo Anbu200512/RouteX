@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About RouteX — Our Story &amp; Mission | School Bus Transport</title>
+  <meta name="description" content="Learn about RouteX: our mission to make every school ride safe and trackable, our story, values and the team behind smarter student transport.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/footer.js" defer></script>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- header -->
+    <section class="relative overflow-hidden bg-brand-950">
+      <div class="pointer-events-none absolute inset-0 bg-grid opacity-20"></div>
+      <div class="pointer-events-none absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-400/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-24 -left-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl"></div>
+
+      <div class="relative mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold text-amber-300 backdrop-blur" data-reveal>
+          <i data-lucide="badge-check" class="h-3.5 w-3.5"></i>
+          Trusted since 2022
+        </span>
+        <h1 class="mx-auto mt-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl lg:text-6xl" data-reveal>
+          About <span class="bg-gradient-to-r from-amber-300 via-amber-200 to-sky-300 bg-clip-text text-transparent">RouteX</span>
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg" data-reveal>
+          We started RouteX with one belief: no parent should ever wonder where their child is on the ride to school. From twelve buses in a single school, we've grown into a citywide safety network — without ever losing that mission.
+        </p>
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row" data-reveal>
+          <a href="routes.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-7 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="map" class="h-5 w-5"></i>Explore Routes</a>
+          <a href="contact.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/25 px-7 py-3.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"><i data-lucide="phone" class="h-5 w-5"></i>Talk to Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- stats -->
+    <section class="bg-white py-16 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto grid max-w-5xl grid-cols-2 gap-4 text-center sm:grid-cols-4" data-reveal>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/60">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">12,000+</p>
+            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Students transported</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/60">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">300+</p>
+            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">GPS buses on the road</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/60">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">40+</p>
+            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">Cities across India</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-900/60">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">99.2%</p>
+            <p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">On-time vehicle arrivals</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- mission -->
+    <section class="py-16 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-10 lg:grid-cols-2">
+          <div data-reveal>
+            <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">Our mission</p>
+            <h2 class="mt-2 font-display text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">Safe rides. Smarter tracking. Peace of mind.</h2>
+            <p class="mt-4 leading-relaxed text-slate-600 dark:text-slate-300">RouteX turns everyday school buses into connected, trackable vehicles. Live GPS, verified drivers and instant boarding confirmations put parents in the loop from the first bell to the last drop.</p>
+            <ul class="mt-6 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+              <li class="flex items-start gap-3"><span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-600"><i data-lucide="check" class="h-4 w-4"></i></span>Every trip is mapped, timed and watched in real time.</li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-600"><i data-lucide="check" class="h-4 w-4"></i></span>Drivers pass three-tier verification before their first ride.</li>
+              <li class="flex items-start gap-3"><span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-emerald-500/15 text-emerald-600"><i data-lucide="check" class="h-4 w-4"></i></span>Boarding and drop confirmations reach parents instantly.</li>
+            </ul>
+          </div>
+          <div class="relative overflow-hidden rounded-3xl border border-slate-200 shadow-lg shadow-brand-900/10 dark:border-slate-800" data-reveal>
+            <img src="assets/images/4.jpg" alt="The RouteX promise — watching over every journey" class="h-full w-full object-cover" width="640" height="520">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-950/90 via-brand-950/30 to-transparent"></div>
+            <div class="absolute inset-x-0 bottom-0 p-7">
+              <p class="font-display text-xs font-extrabold uppercase tracking-widest text-amber-300">The RouteX promise</p>
+              <blockquote class="mt-3 font-display text-lg font-bold leading-relaxed text-white">“The school commute is the first big journey in every child’s day. We make sure someone is always watching over it.”</blockquote>
+              <p class="mt-3 text-xs font-semibold text-slate-300">— The RouteX operations team</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- values -->
+    <section class="py-16 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">Our values</p>
+          <h2 class="mt-2 font-display text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">What we stand for, daily</h2>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="shield-check" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Safety first</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Vetted drivers, speed monitoring and SOS support on every ride.</p>
+          </article>
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600"><i data-lucide="eye" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Radical transparency</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Live position, live ETA, live timestamps — no vague “on the way” answers.</p>
+          </article>
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/20 text-amber-600"><i data-lucide="timer" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Clockwork punctuality</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Routes and timings tuned per area until arrivals stay predictable.</p>
+          </article>
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-600"><i data-lucide="handshake" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Trust that compounds</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Schools, drivers and families — one accountable chain for every seat.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- story timeline -->
+    <section class="py-16 dark:bg-slate-950">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">Our story</p>
+          <h2 class="mt-2 font-display text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">From one school to forty cities</h2>
+        </div>
+        <div class="mt-10 space-y-0">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+              <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">2022 — The beginning</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">RouteX launches with GPS units fitted on 12 buses of a single school in Bengaluru.</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+              <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">2023 — Scale-up</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">Boarding &amp; drop confirmations go live; first 10,000 rides recorded across three cities.</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+              <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">2024 — Every ride, tracked</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">Parent app and dashboard launch with live maps, receipts and ride logs for every family.</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+              <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">2026 — 40 cities strong</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">300+ buses, 12,000+ students and an operations command centre that never sleeps.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- team -->
+    <section class="py-16 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <p class="text-xs font-extrabold uppercase tracking-widest text-brand-600 dark:text-amber-400">The people</p>
+          <h2 class="mt-2 font-display text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">Overseeing every kilometre</h2>
+          <p class="mt-4 text-slate-600 dark:text-slate-300">From the command centre to the front seat, a dedicated crew keeps every RouteX journey moving safely.</p>
+        </div>
+        <div class="relative mt-10 overflow-hidden rounded-3xl border border-slate-200 shadow-lg shadow-brand-900/5 dark:border-slate-800" data-reveal>
+          <img src="assets/images/6.jpg" alt="The RouteX team overseeing every kilometre of the journey" class="h-56 w-full object-cover sm:h-72" width="1280" height="320">
+          <div class="absolute inset-0 bg-gradient-to-t from-brand-950/80 via-brand-950/20 to-transparent"></div>
+          <div class="absolute inset-x-0 bottom-0 hidden items-center justify-between gap-3 px-6 py-4 sm:flex">
+            <div class="flex items-center gap-2 text-xs font-semibold text-white">
+              <span class="relative flex h-2.5 w-2.5"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500"></span></span>
+              RouteX command centre • active
+            </div>
+            <span class="rounded-full bg-amber-400/20 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-amber-200">40+ cities served</span>
+          </div>
+        </div>
+        <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Aarav Mehta" class="mx-auto h-20 w-20 rounded-2xl object-cover shadow-md" loading="lazy" width="80" height="80">
+            <h3 class="mt-4 font-display font-bold text-slate-900 dark:text-white">Aarav Mehta</h3>
+            <p class="text-xs font-semibold text-slate-400">Co-founder &amp; CEO</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sara Kapoor" class="mx-auto h-20 w-20 rounded-2xl object-cover shadow-md" loading="lazy" width="80" height="80">
+            <h3 class="mt-4 font-display font-bold text-slate-900 dark:text-white">Sara Kapoor</h3>
+            <p class="text-xs font-semibold text-slate-400">Head of Operations</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Rohan Nair" class="mx-auto h-20 w-20 rounded-2xl object-cover shadow-md" loading="lazy" width="80" height="80">
+            <h3 class="mt-4 font-display font-bold text-slate-900 dark:text-white">Rohan Nair</h3>
+            <p class="text-xs font-semibold text-slate-400">Head of Technology</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Priya Gupta" class="mx-auto h-20 w-20 rounded-2xl object-cover shadow-md" loading="lazy" width="80" height="80">
+            <h3 class="mt-4 font-display font-bold text-slate-900 dark:text-white">Priya Gupta</h3>
+            <p class="text-xs font-semibold text-slate-400">Head of Safety &amp; Compliance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 to-brand-950 px-6 py-12 text-center shadow-2xl shadow-brand-900/30 sm:px-12" data-reveal>
+          <div class="pointer-events-none absolute inset-0 bg-grid opacity-30"></div>
+          <div class="relative">
+            <h2 class="font-display text-2xl font-extrabold text-white sm:text-3xl">See RouteX on your child's route today</h2>
+            <p class="mx-auto mt-3 max-w-xl text-slate-200">Browse routes in your area and create a parent account to start tracking in minutes.</p>
+            <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="signup.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-7 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="user-plus" class="h-5 w-5"></i>Create Account</a>
+              <a href="routes.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/40 px-7 py-3.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"><i data-lucide="map" class="h-5 w-5"></i>Browse Routes</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>

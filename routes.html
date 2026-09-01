@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Routes &amp; Pickup Zones — RouteX</title>
+  <meta name="description" content="Browse RouteX bus routes, pickup stops, timings and covered areas. Search and filter routes by area or pickup zone.">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('routex_theme');
+        var dark = t === 'dark';
+        if (dark) document.documentElement.classList.add('dark');
+        var d = localStorage.getItem('routex_dir') || 'ltr';
+        document.documentElement.setAttribute('dir', d);
+      } catch (e) {}
+    })();
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef4ff', 100: '#dce7fd', 200: '#c1d3fb', 300: '#97b5f8',
+              400: '#6690f2', 500: '#436aeb', 600: '#334edf', 700: '#2540cc',
+              800: '#2338a5', 900: '#1f2f7e', 950: '#15204f'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/nav.js" defer></script>
+  <script src="js/footer.js" defer></script>
+  <script src="js/routes.js" defer></script>
+</head>
+<body class="bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+  <div id="site-header"></div>
+
+  <main>
+    <!-- page header -->
+    <section class="relative overflow-hidden bg-brand-950">
+      <div class="pointer-events-none absolute inset-0 bg-grid opacity-20"></div>
+      <div class="pointer-events-none absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-brand-500/30 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-amber-400/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute bottom-24 -left-24 h-64 w-64 rounded-full bg-sky-500/20 blur-3xl"></div>
+      <div class="relative mx-auto max-w-5xl px-4 py-12 text-center sm:px-6 lg:px-8 lg:py-16">
+        <nav class="flex items-center justify-center gap-1.5 text-xs font-medium text-slate-400" aria-label="Breadcrumb">
+          <a href="index.html" class="hover:text-amber-300">Home</a>
+          <i data-lucide="chevron-right" class="h-3 w-3"></i>
+          <span class="text-slate-200">Routes</span>
+        </nav>
+        <h1 class="mx-auto mt-5 max-w-3xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl">
+          Routes &amp; <span class="bg-gradient-to-r from-amber-300 via-amber-200 to-sky-300 bg-clip-text text-transparent">Pickup Zones</span>
+        </h1>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-300 sm:text-lg">Explore our network of GPS-tracked routes. Search by route, filter by area or pickup zone, and explore the map-style view of each schedule.</p>
+        <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          <a href="#map-board" class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-7 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="map" class="h-5 w-5"></i>Start Exploring</a>
+          <a href="plans.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/25 px-7 py-3.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"><i data-lucide="route" class="h-5 w-5"></i>View Plans</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- map board -->
+    <section id="map-board" class="relative scroll-mt-16 overflow-hidden py-16 dark:bg-slate-950" data-reveal>
+      <div class="pointer-events-none absolute inset-0 bg-grid opacity-25"></div>
+      <div class="pointer-events-none absolute -top-32 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl"></div>
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-xs font-semibold text-brand-700 dark:border-slate-700 dark:bg-slate-900 dark:text-amber-300"><i data-lucide="map" class="h-3.5 w-3.5"></i>Interactive route explorer</span>
+          <h2 class="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Pick a route, see the <span class="bg-gradient-to-r from-brand-600 to-amber-500 bg-clip-text text-transparent dark:from-amber-300 dark:to-sky-300">whole journey</span></h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">Select a route to watch its path, stops and schedule on the map, with the matching bus and driver details at a glance.</p>
+        </div>
+
+        <div class="mx-auto mt-8 grid max-w-4xl grid-cols-2 gap-4 sm:grid-cols-4">
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">6</p>
+            <p class="mt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Active routes</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">24</p>
+            <p class="mt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Pickup stops</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <p class="font-display text-2xl font-extrabold text-brand-600 dark:text-amber-400">9</p>
+            <p class="mt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">Service zones</p>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white p-4 text-center shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <p class="font-display text-2xl font-extrabold text-emerald-500">98%</p>
+            <p class="mt-1 text-[11px] font-semibold uppercase tracking-wide text-slate-400">On-time rate</p>
+          </div>
+        </div>
+
+        <div class="mt-10 grid gap-6 lg:grid-cols-3">
+          <div class="map-panel relative overflow-hidden rounded-3xl border border-slate-800 p-4 sm:p-5 lg:col-span-2">
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2 text-sm font-bold text-white">
+                <i data-lucide="map" class="h-4 w-4 text-amber-400"></i>
+                <span id="board-title">Greenwood Route</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold text-slate-200"><i data-lucide="clock" class="h-3 w-3 text-amber-400"></i><span id="board-duration">~25 min</span></span>
+                <span class="flex items-center gap-1 rounded-full bg-white/10 px-3 py-1 text-[11px] font-semibold text-slate-200"><i data-lucide="map-pin" class="h-3 w-3 text-amber-400"></i><span id="board-stops">3 stops</span></span>
+                <span id="board-availability" class="rounded-full bg-emerald-500/15 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-emerald-300">Available</span>
+              </div>
+            </div>
+            <svg id="board-map" viewBox="0 0 640 360" class="w-full rounded-2xl" role="img" aria-label="Route map" style="background:#0c1632">
+              <defs>
+                <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              </defs>
+              <path d="M40,280 L110,262 L180,224 L250,178 L320,150 L390,116 L470,92 L545,62 L600,40" fill="none" stroke="#334155" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M40,280 L110,262 L180,224 L250,178 L320,150 L390,116 L470,92 L545,62 L600,40" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+              <circle cx="53" cy="277" r="6" fill="#cbd5e1" stroke="#0f172a" stroke-width="2"/>
+              <circle cx="215" cy="201" r="6" fill="#cbd5e1" stroke="#0f172a" stroke-width="2"/>
+              <circle cx="330" cy="143" r="6" fill="#facc15" stroke="#0f172a" stroke-width="2"/>
+              <circle cx="440" cy="99" r="6" fill="#cbd5e1" stroke="#0f172a" stroke-width="2"/>
+              <circle cx="575" cy="48" r="8" fill="#34d399" stroke="#0f172a" stroke-width="2"/>
+              <text x="575" y="40" text-anchor="middle" fill="#34d399" font-size="10" font-family="sans-serif">School</text>
+              <text x="53" y="300" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">Greenwood</text>
+              <text x="330" y="163" text-anchor="middle" fill="#facc15" font-size="9" font-family="sans-serif">Pickup</text>
+              <circle cx="390" cy="116" r="5" fill="#3b82f6" filter="url(#glow)">
+                <animate attributeName="r" values="5;7;5" dur="2s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            <div class="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-medium text-slate-300">
+              <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>School</span>
+              <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span>Pickup</span>
+              <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>Regular stop</span>
+              <span class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-sky-400"></span>Bus position</span>
+            </div>
+            <p class="mt-3 flex items-center gap-2 text-[11px] text-slate-400"><i data-lucide="info" class="h-3.5 w-3.5 text-sky-400"></i>Frontend map simulation — not a live GPS feed. Select a route to view its path and stops.</p>
+          </div>
+
+          <div class="flex flex-col gap-5">
+            <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h2 class="font-display text-base font-bold text-slate-900 dark:text-white">Select a route</h2>
+              <div id="route-tabs" class="mt-4 flex flex-col gap-2.5 text-left">
+                <button class="flex items-center gap-3 rounded-xl border-2 border-brand-500 bg-brand-50/60 px-3.5 py-2.5 text-sm font-semibold shadow-sm dark:border-amber-400/50 dark:bg-slate-800" data-route-tab="r1">
+                  <span class="h-3 w-3 rounded-full shrink-0 ring-2 ring-brand-200 dark:ring-slate-600" style="background:#3b82f6"></span>
+                  <span class="min-w-0"><span class="block truncate text-slate-900 dark:text-white">Greenwood Route</span><span class="block text-[11px] font-normal text-slate-400">SB-104 • Raj Sharma</span></span>
+                  <span class="ml-auto inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400"><i data-lucide="check" class="h-3 w-3"></i>Open</span>
+                </button>
+                <button class="flex items-center gap-3 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-semibold transition hover:border-brand-300 dark:border-slate-700 dark:hover:border-amber-400/40" data-route-tab="r2">
+                  <span class="h-3 w-3 rounded-full shrink-0" style="background:#f59e0b"></span>
+                  <span class="min-w-0"><span class="block truncate">Sunrise Circuit</span><span class="block text-[11px] font-normal text-slate-400">SB-108 • Meena Iyer</span></span>
+                  <span class="ml-auto rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-600 dark:text-amber-400">Few seats</span>
+                </button>
+                <button class="flex items-center gap-3 rounded-xl border border-slate-200 px-3.5 py-2.5 text-sm font-semibold transition hover:border-brand-300 dark:border-slate-700 dark:hover:border-amber-400/40" data-route-tab="r3">
+                  <span class="h-3 w-3 rounded-full shrink-0" style="background:#10b981"></span>
+                  <span class="min-w-0"><span class="block truncate">Maple Valley</span><span class="block text-[11px] font-normal text-slate-400">SB-112 • Arun Verma</span></span>
+                  <span class="ml-auto inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400"><i data-lucide="check" class="h-3 w-3"></i>Open</span>
+                </button>
+              </div>
+              <p class="mt-4 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-[11px] text-slate-500 dark:bg-slate-800 dark:text-slate-400"><span>Showing Greenwood Route • JS renders the full interactive list.</span><a href="#route-cards" class="font-bold text-brand-600 hover:underline dark:text-amber-400">View all routes →</a></p>
+            </div>
+
+            <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <h2 class="mb-4 flex items-center gap-2 font-display text-base font-bold text-slate-900 dark:text-white"><i data-lucide="bus" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i>Journey details</h2>
+              <div id="board-details" class="space-y-3 text-sm">
+                <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="bus" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">Bus:</b> <span id="bd-bus">SB-104</span></div>
+                <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="user" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">Driver:</b> <span id="bd-driver">Raj Sharma • +91 98765 00104</span></div>
+                <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="clock" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">School arrival:</b> <span id="bd-arrival">8:05 AM (school)</span></div>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                  <div class="rounded-xl bg-slate-50 p-3 text-center dark:bg-slate-800">
+                    <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Stops</p>
+                    <p class="mt-0.5 font-display text-lg font-extrabold text-slate-900 dark:text-white"><span id="bd-stops">3</span></p>
+                  </div>
+                  <div class="rounded-xl bg-slate-50 p-3 text-center dark:bg-slate-800">
+                    <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Duration</p>
+                    <p class="mt-0.5 font-display text-lg font-extrabold text-slate-900 dark:text-white"><span id="bd-duration">~25 min</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- filters + cards -->
+    <section class="pb-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+          <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr_auto]">
+            <div class="relative">
+              <i data-lucide="search" class="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i>
+              <input id="filter-search" type="search" placeholder="Search route, area or stop…" class="rx-input pl-10" aria-label="Search routes">
+            </div>
+            <select id="filter-area" class="rx-input" aria-label="Filter by area">
+              <option value="">All areas</option>
+              <option>Greenwood</option>
+              <option>Hillcrest</option>
+              <option>Lakeview</option>
+              <option>Maple</option>
+              <option>Old Town</option>
+              <option>Palm Grove</option>
+              <option>Riverdale</option>
+              <option>Sunrise</option>
+              <option>Vista</option>
+            </select>
+            <select id="filter-zone" class="rx-input" aria-label="Filter by pickup zone">
+              <option value="">All pickup zones</option>
+              <option>Central</option>
+              <option>East</option>
+              <option>North</option>
+              <option>South</option>
+              <option>West</option>
+            </select>
+            <select id="filter-avail" class="rx-input" aria-label="Filter by availability">
+              <option value="">Any availability</option>
+              <option value="Available">Available</option>
+              <option value="Few seats">Few seats</option>
+            </select>
+            <button id="filter-reset" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-600 dark:text-slate-300 dark:hover:border-amber-400 dark:hover:text-amber-300">
+              <i data-lucide="rotate-ccw" class="h-4 w-4"></i><span class="hidden sm:inline">Reset</span>
+            </button>
+          </div>
+          <p id="filter-count" class="mt-3 text-xs font-semibold text-slate-400 dark:text-slate-500">Showing 6 of 6 routes</p>
+        </div>
+
+        <div id="route-cards" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <noscript>
+            <div class="col-span-full text-center">
+              <p class="text-sm text-slate-500 dark:text-slate-400">JavaScript is disabled — showing sample routes below.</p>
+            </div>
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl text-white" style="background:#3b82f6"><i data-lucide="bus" class="h-5 w-5"></i></span>
+              <h3 class="mt-3 font-display text-lg font-bold text-slate-900 dark:text-white">Greenwood Route</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">SB-104 • Driver: Raj Sharma</p>
+              <ul class="mt-4 space-y-2.5 text-sm">
+                <li class="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800"><span class="text-slate-600 dark:text-slate-300">Greenwood Park</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">7:36 AM → 4:26 PM</span></li>
+                <li class="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800"><span class="text-slate-600 dark:text-slate-300">Maple Street</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">7:48 AM → 4:14 PM</span></li>
+                <li class="flex items-center justify-between"><span class="text-slate-600 dark:text-slate-300">Emerald Academy (School)</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">8:05 AM</span></li>
+              </ul>
+            </article>
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl text-white" style="background:#f59e0b"><i data-lucide="bus" class="h-5 w-5"></i></span>
+              <h3 class="mt-3 font-display text-lg font-bold text-slate-900 dark:text-white">Sunrise Circuit</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">SB-108 • Driver: Meena Iyer</p>
+              <ul class="mt-4 space-y-2.5 text-sm">
+                <li class="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800"><span class="text-slate-600 dark:text-slate-300">Palm Grove</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">7:30 AM → 4:32 PM</span></li>
+                <li class="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800"><span class="text-slate-600 dark:text-slate-300">Vista Towers</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">7:45 AM → 4:16 PM</span></li>
+                <li class="flex items-center justify-between"><span class="text-slate-600 dark:text-slate-300">Emerald Academy (School)</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">8:02 AM</span></li>
+              </ul>
+            </article>
+            <article class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl text-white" style="background:#10b981"><i data-lucide="bus" class="h-5 w-5"></i></span>
+              <h3 class="mt-3 font-display text-lg font-bold text-slate-900 dark:text-white">Maple Valley</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">SB-112 • Driver: Arun Verma</p>
+              <ul class="mt-4 space-y-2.5 text-sm">
+                <li class="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800"><span class="text-slate-600 dark:text-slate-300">Riverdale Bridge</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">7:34 AM → 4:28 PM</span></li>
+                <li class="flex items-center justify-between border-b border-slate-100 pb-2 dark:border-slate-800"><span class="text-slate-600 dark:text-slate-300">Maple Highrise</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">7:47 AM → 4:15 PM</span></li>
+                <li class="flex items-center justify-between"><span class="text-slate-600 dark:text-slate-300">Emerald Academy (School)</span><span class="text-xs font-semibold text-slate-500 dark:text-slate-400">8:04 AM</span></li>
+              </ul>
+            </article>
+          </noscript>
+        </div>
+
+        <div id="no-results" class="mt-10 hidden text-center">
+          <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 dark:bg-slate-800"><i data-lucide="search-x" class="h-8 w-8"></i></span>
+          <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">No routes match your filters</h3>
+          <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Try a different search, area or zone.</p>
+          <button onclick="RouteXRoutes.resetFilters()" class="mt-5 inline-flex items-center gap-2 rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-bold text-white shadow shadow-brand-600/25 hover:bg-brand-700"><i data-lucide="rotate-ccw" class="h-4 w-4"></i>Reset filters</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WHY OUR ROUTES ============ -->
+    <section class="bg-slate-50 py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center" data-reveal>
+          <span class="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-xs font-semibold text-brand-700 dark:border-slate-700 dark:bg-slate-900 dark:text-amber-300"><i data-lucide="sparkles" class="h-3.5 w-3.5"></i>Why RouteX</span>
+          <h2 class="mt-4 font-display text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Not just a route — a safety net</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-300">Every RouteX route is planned, monitored and adjusted in real time to keep your child's commute safe, fast and predictable.</p>
+        </div>
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-600 dark:text-amber-400"><i data-lucide="radar" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Live GPS tracking</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Every bus updates its position every 5 seconds — you always know exactly where it is.</p>
+          </article>
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600"><i data-lucide="route" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Dynamic rerouting</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">If a road is blocked or traffic spikes, the route adjusts automatically and parents are notified.</p>
+          </article>
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400/20 text-amber-600"><i data-lucide="school" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">School sync</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Arrival times are synced with school bells so buses pull in right when the gate opens.</p>
+          </article>
+          <article class="card-lift rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900" data-reveal>
+            <span class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500/10 text-sky-600"><i data-lucide="shield-check" class="h-6 w-6"></i></span>
+            <h3 class="mt-4 font-display text-lg font-bold text-slate-900 dark:text-white">Geofenced safe zones</h3>
+            <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">Buses stay within speed-limited zones near schools and residential areas at all times.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CTA ============ -->
+    <section class="py-20 dark:bg-slate-950">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-700 via-brand-800 to-brand-950 px-6 py-14 text-center shadow-2xl shadow-brand-900/30 sm:px-12" data-reveal>
+          <div class="pointer-events-none absolute inset-0 bg-grid opacity-25"></div>
+          <div class="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-amber-400/25 blur-3xl"></div>
+          <div class="relative">
+            <h2 class="font-display text-3xl font-extrabold text-white sm:text-4xl">Find your child's route today</h2>
+            <p class="mx-auto mt-4 max-w-xl text-slate-200">Join thousands of parents who track every ride live. Sign up in under a minute — no long forms, no credit card.</p>
+            <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a href="signup.html" class="inline-flex items-center justify-center gap-2 rounded-xl bg-amber-400 px-7 py-3.5 text-sm font-extrabold text-slate-900 shadow-lg shadow-amber-500/25 transition hover:-translate-y-0.5 hover:bg-amber-300"><i data-lucide="user-plus" class="h-5 w-5"></i>Create free account</a>
+              <a href="plans.html" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-white/25 px-7 py-3.5 text-sm font-bold text-white transition hover:border-white hover:bg-white/10"><i data-lucide="credit-card" class="h-5 w-5"></i>View plans</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+</body>
+</html>
