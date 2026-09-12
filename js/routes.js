@@ -24,6 +24,10 @@
 
   /* ---------- stop coordinates for a route (spread along path) ---------- */
   var FRACS = [0.12, 0.3, 0.47, 0.66, 0.88];
+  function schoolName(route) {
+    var last = route.stops && route.stops.length ? route.stops[route.stops.length - 1].name : '';
+    return String(last).replace(/\s*\(School\)/i, '') || 'Emerald Academy';
+  }
   function stopsForMap(route) {
     return route.stops.map(function (s, i) {
       var pt = RouteX.pointOnPath(route.coords, FRACS[i]);
@@ -81,6 +85,8 @@
     var title = document.getElementById('board-title');
     var avail = document.getElementById('board-availability');
     if (title) title.textContent = route.name;
+    var selLabel = document.getElementById('board-selected');
+    if (selLabel) selLabel.textContent = route.name;
     if (avail) {
       avail.textContent = route.availability;
       avail.className =
@@ -91,9 +97,17 @@
     var bdBus = document.getElementById('bd-bus');
     var bdDriver = document.getElementById('bd-driver');
     var bdArrival = document.getElementById('bd-arrival');
+    var bdSchool = document.getElementById('bd-school');
+    var bdAreas = document.getElementById('bd-areas');
+    var bdZones = document.getElementById('bd-zones');
     if (bdBus) bdBus.textContent = route.busNo;
     if (bdDriver) bdDriver.textContent = route.driver + ' • ' + route.phone;
     if (bdArrival) bdArrival.textContent = route.stops[route.stops.length - 1].pick + ' (school)';
+    if (bdSchool) bdSchool.textContent = schoolName(route);
+    if (bdAreas) bdAreas.innerHTML = route.areas.map(function (a) {
+      return '<span class="rounded-full bg-brand-50 px-2.5 py-0.5 text-[11px] font-semibold text-brand-700 dark:bg-slate-800 dark:text-amber-300">' + RouteX.escapeHtml(a) + '</span>';
+    }).join('');
+    if (bdZones) bdZones.textContent = route.zones.join(', ');
 
     /* duration estimate from first pickup to school arrival */
     var durText = '~25 min';
@@ -167,6 +181,9 @@
       var areas = r.areas.map(function (a) {
         return '<span class="rounded-full bg-brand-50 px-2.5 py-1 text-[11px] font-semibold text-brand-700 dark:bg-slate-800 dark:text-amber-300">' + RouteX.escapeHtml(a) + '</span>';
       }).join('');
+      var zones = r.zones.map(function (z) {
+        return '<span class="rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-semibold text-amber-700 dark:bg-slate-800 dark:text-slate-300">' + RouteX.escapeHtml(z) + ' zone</span>';
+      }).join('');
 
       return (
         '<article class="card-lift flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">' +
@@ -176,6 +193,7 @@
         '<span class="flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-sm" style="background:' + r.color + '"><i data-lucide="bus" class="h-5 w-5"></i></span>' +
         '<h3 class="mt-3 font-display text-lg font-bold text-slate-900 dark:text-white">' + RouteX.escapeHtml(r.name) + '</h3>' +
         '<p class="text-sm text-slate-500 dark:text-slate-400">' + r.busNo + ' • Driver: ' + RouteX.escapeHtml(r.driver) + '</p>' +
+        '<p class="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400"><i data-lucide="school" class="h-3.5 w-3.5 text-brand-500 dark:text-amber-400"></i>School served: <span class="text-slate-700 dark:text-slate-200">' + RouteX.escapeHtml(schoolName(r)) + '</span></p>' +
         '</div>' +
         '<span class="shrink-0 rounded-full px-3 py-1 text-[11px] font-bold ' +
         (r.availability === 'Available'
@@ -189,7 +207,12 @@
         (r.stops.length > 3 ? '<ul class="mb-3 space-y-2.5">' + stopsHtml + '</ul>' +
           '<p class="mb-3 text-xs font-semibold text-slate-400">+' + (r.stops.length - 3) + ' more stops</p>'
           : '<ul class="mb-3 space-y-2.5">' + stopsHtml + '</ul>') +
-        '<div class="mb-4 flex flex-wrap gap-1.5">' + areas + '</div>' +
+        '<div class="mb-4 flex flex-wrap gap-1.5">' +
+        (zones ? '<span class="w-full pb-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">Areas covered</span>' : '') +
+        areas + '</div>' +
+        (zones ? '<div class="mb-4 flex flex-wrap gap-1.5">' +
+        '<span class="w-full pb-0.5 text-[10px] font-bold uppercase tracking-wide text-slate-400">Service zones</span>' +
+        zones + '</div>' : '') +
         '<div class="flex gap-2">' +
         '<button data-use-map="' + r.id + '" class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border-2 border-slate-200 px-3 py-2.5 text-xs font-bold text-slate-700 transition hover:border-brand-500 hover:text-brand-600 dark:border-slate-700 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300">' +
         '<i data-lucide="map" class="h-3.5 w-3.5"></i>View on map</button>' +

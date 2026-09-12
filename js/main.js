@@ -31,13 +31,17 @@
       name: 'Basic',
       price: 899,
       tagline: 'Essential one-way transport',
+      description: 'Budget-friendly single-trip transport for one commute a day — with live tracking and SMS alerts so you always know where the bus is.',
       popular: false,
       features: [
-        'One-way transport',
-        'Live GPS tracking',
-        'Basic SMS notifications',
-        'Verified driver & bus',
-        'Email support'
+        'One-way transport (morning or afternoon)',
+        'Live GPS tracking in the app & dashboard',
+        'Basic SMS notifications (boarding & delays)',
+        'Verified driver & GPS-equipped bus',
+        'Parent dashboard & profile',
+        'Digital receipts every month',
+        'Email support, Monday to Saturday',
+        'Cancel anytime — no lock-in'
       ]
     },
     {
@@ -45,14 +49,19 @@
       name: 'Standard',
       price: 1499,
       tagline: 'Full-day coverage for growing families',
+      description: 'The complete school day covered — to and from school — with boarding and drop confirmations, delay alerts and trip history for every ride.',
       popular: true,
       features: [
-        'Two-way transport',
-        'Live GPS tracking',
-        'Boarding & drop alerts',
-        'Parent support 7 days',
-        'Route change alerts',
-        'Trip history & logs'
+        'Two-way transport (to and from school)',
+        'Live GPS tracking in the app & dashboard',
+        'Boarding & drop confirmations',
+        'Delay & route-change alerts',
+        'Trip history & ride logs',
+        'Parent dashboard & profile',
+        'Digital receipts every month',
+        'Parent support 7 days a week',
+        'Free plan changes anytime',
+        'Cancel anytime — no lock-in'
       ]
     },
     {
@@ -60,14 +69,19 @@
       name: 'Premium',
       price: 2299,
       tagline: 'Priority care with advanced safety',
+      description: 'Priority care with advanced tracking, a dedicated ride manager and 24x7 support — built for families who want the highest level of coverage.',
       popular: false,
       features: [
-        'Two-way transport',
-        'Advanced live tracking',
-        'Priority 24x7 support',
-        'All notification types',
-        'Free schedule changes',
-        'Dedicated ride manager'
+        'Two-way priority transport (guaranteed seat)',
+        'Advanced live tracking (position every 5 seconds)',
+        'All notification types (SMS, push & email)',
+        'Priority 24x7 support line',
+        'Dedicated ride manager',
+        'Free schedule changes anytime',
+        'Trip history & ride logs',
+        'Profiles for up to 4 children',
+        'Digital receipts & tax invoice',
+        'Cancel anytime — no lock-in'
       ]
     }
   ];

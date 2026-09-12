@@ -964,21 +964,6 @@
       RouteX.refreshIcons();
     });
 
-    /* theme + dir toggles in the mobile sidebar */
-    var sideThemeBtn = $('side-theme-toggle');
-    if (sideThemeBtn) sideThemeBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      RouteX.toggleTheme();
-      syncDashTheme();
-      RouteX.refreshIcons();
-    });
-    var sideDirBtn = $('side-dir-toggle');
-    if (sideDirBtn) sideDirBtn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      RouteX.toggleDir();
-      syncDashDir();
-      RouteX.refreshIcons();
-    });
     syncDashTheme();
     syncDashDir();
   }

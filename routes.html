@@ -165,7 +165,7 @@
                   <span class="ml-auto inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-600 dark:text-emerald-400"><i data-lucide="check" class="h-3 w-3"></i>Open</span>
                 </button>
               </div>
-              <p class="mt-4 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-[11px] text-slate-500 dark:bg-slate-800 dark:text-slate-400"><span>Showing Greenwood Route • JS renders the full interactive list.</span><a href="#route-cards" class="font-bold text-brand-600 hover:underline dark:text-amber-400">View all routes →</a></p>
+              <p class="mt-4 flex items-center justify-between gap-3 rounded-xl bg-slate-50 px-3 py-2 text-[11px] leading-relaxed text-slate-500 dark:bg-slate-800 dark:text-slate-400"><span class="min-w-0">Showing <b class="font-bold text-slate-700 dark:text-slate-200" id="board-selected">Greenwood Route</b> • JS renders the full interactive list.</span><a href="#route-cards" class="shrink-0 font-bold text-brand-600 hover:underline dark:text-amber-400">View all routes →</a></p>
             </div>
 
             <div class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
@@ -173,6 +173,9 @@
               <div id="board-details" class="space-y-3 text-sm">
                 <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="bus" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">Bus:</b> <span id="bd-bus">SB-104</span></div>
                 <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="user" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">Driver:</b> <span id="bd-driver">Raj Sharma • +91 98765 00104</span></div>
+                <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="school" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">School served:</b> <span id="bd-school">Emerald Academy</span></div>
+                <div class="flex items-start gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="map-pin" class="mt-0.5 h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">Areas covered:</b> <span id="bd-areas" class="flex flex-wrap gap-1">Greenwood, Lakeview, Hillcrest</span></div>
+                <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="compass" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">Service zones:</b> <span id="bd-zones">North, Central</span></div>
                 <div class="flex items-center gap-2.5 text-slate-600 dark:text-slate-300"><i data-lucide="clock" class="h-4 w-4 text-brand-600 dark:text-amber-400"></i><b class="text-slate-900 dark:text-white">School arrival:</b> <span id="bd-arrival">8:05 AM (school)</span></div>
                 <div class="grid grid-cols-2 gap-3 pt-2">
                   <div class="rounded-xl bg-slate-50 p-3 text-center dark:bg-slate-800">

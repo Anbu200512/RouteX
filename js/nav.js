@@ -160,10 +160,8 @@
 
     var desktopRight =
       themeToggleMarkup(false) + dirToggleMarkup(false) +
-      '<a href="login.html" class="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 px-3 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-brand-400 hover:text-brand-600 dark:border-slate-600 dark:text-slate-200 dark:hover:border-amber-400 dark:hover:text-amber-300 xl:px-4">' +
-      '<i data-lucide="log-in" class="h-4 w-4"></i>Login</a>' +
-      '<a href="signup.html" class="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-3 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-600/30 transition hover:bg-brand-700 xl:px-4">' +
-      '<i data-lucide="user-plus" class="h-4 w-4"></i>Sign up</a>';
+      '<a href="login.html" class="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-3 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-600/30 transition hover:bg-brand-700 xl:px-4">' +
+      '<i data-lucide="log-in" class="h-4 w-4"></i>Login</a>';
 
     var mobileItems = LINKS.map(mobileLinkMarkup).join('');
 
@@ -186,9 +184,8 @@
       '<div class="mt-1 flex items-center justify-center gap-4 border-t border-slate-200/70 pt-3 dark:border-slate-800">' +
       themeToggleMarkup(true) + dirToggleMarkup(true) +
       '</div>' +
-      '<div class="grid grid-cols-2 gap-2 pt-3">' +
-      '<a href="login.html" class="flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-slate-600 dark:text-slate-200"><i data-lucide="log-in" class="h-4 w-4"></i>Login</a>' +
-      '<a href="signup.html" class="flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow shadow-brand-600/30"><i data-lucide="user-plus" class="h-4 w-4"></i>Sign up</a>' +
+      '<div class="grid grid-cols-1 gap-2 pt-3">' +
+      '<a href="login.html" class="flex items-center justify-center gap-2 rounded-xl bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow shadow-brand-600/30"><i data-lucide="log-in" class="h-4 w-4"></i>Login</a>' +
       '</div></div></div></div></header>';
 
     RouteX.refreshIcons(holder);
